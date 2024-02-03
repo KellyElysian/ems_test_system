@@ -92,6 +92,11 @@ $reg_submit = $_POST['reg'];
         mysqli_query($db_connection, "INSERT INTO e_Info (member_id, dateSignedUp) VALUES
         ($id, CURDATE())");
 
+        // Grabbing the user's role and assigning it to a session variable.
+        $user_id_results = mysqli_query($db_connection, "SELECT siteRole FROM e_User WHERE uid=$user_id");
+        $user_info_array = mysqli_fetch_assoc($user_id_results);
+        $_SESSION['role'] = $user_info_array['siteRole'];
+
         // Tells user that the sign_up was successful and redirects them the member signup page
         echo '
         <div class="form_container">
