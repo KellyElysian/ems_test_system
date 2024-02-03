@@ -75,12 +75,12 @@ if (!isset($_SESSION['term'])) {
         $in_site_role = in_array($in_email, $admin_emails) ? "Admin" : "Member";
 
         // Inserting it into mySQL database
-        $insert_user = mysqli_query($db_connection, "INSERT INTO e_User (email, password, siteRole) VALUES ($in_email, $in_password, $in_site_role)");
+        $insert_user = mysqli_query($db_connection, "INSERT INTO e_User (email, password, siteRole) VALUES ('$in_email', '$in_password', '$in_site_role')");
 
         // Grabs the registered user's id from the database and stores it as a session variable to be used everywhere
         $user_id_results = mysqli_query($db_connection, "SELECT uid FROM e_Users WHERE email='$in_email'");
         $user_info_array = mysqli_fetch_assoc($user_id_results);
-        $_SESSION['user_id'] = $user_info_array['id'];
+        $_SESSION['user_id'] = $user_info_array['uid'];
 
         // Tells user that the sign_up was successful and redirects them the member signup page
         echo '
@@ -89,7 +89,7 @@ if (!isset($_SESSION['term'])) {
         </div>
         ';
 
-        header('Refresh: 5; URL=https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
         die();
     }
     ?>

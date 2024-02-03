@@ -10,6 +10,9 @@ if (isset($_SESSION['user_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
         die();
     }
+} else {
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    die();
 }
 
 // Common SESSION variables that are always used.
@@ -52,6 +55,7 @@ $member_submit = $_POST['member'];
                         <div>
                             <label for="agreement">By choosing yes, you agreed to the previous <br>
                                 terms and conditions and the rules of our agency.</label>
+                            <br>
                             <input type="radio" name="agree" id="agreeNo" value="Yes" onchange="radioHandler(this)" required>
                             <label for="yesTerms">Yes</label>
                             <input type="radio" name="agree" id="termsYes" value="No" onchange="radioHandler(this)" checked>
