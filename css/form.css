@@ -97,7 +97,7 @@ form .submit {
 }
 
 #user .sign_up {
-    color: green;
+    color: rgb(0, 96, 0);
     font-size: 20px;
     text-align: center;
 }
@@ -113,4 +113,10 @@ form .submit {
 #member .radio_container {
     width: fit-content;
     margin: 1.0em auto;
+}
+
+#member .sign_up {
+    color: rgb(0, 96, 0);
+    font-size: 20px;
+    text-align: center;
 }

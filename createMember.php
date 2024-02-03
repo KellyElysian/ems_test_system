@@ -50,7 +50,7 @@ $reg_submit = $_POST['reg'];
                         </div>
 
                         <div>
-                            <label for="agreement">By choosing yes, you agreed to the previous <br>
+                            <label for="agreement">By choosing "Yes", you agree to the previous <br>
                                 terms and conditions and the rules of our agency.</label>
                             <br>
                             <div class="radio_container">
@@ -69,13 +69,43 @@ $reg_submit = $_POST['reg'];
         </div>
     <?php
     }
-    // If they have clicked "Finish Registration", 
+    // If they have clicked "Finish Registration", processes the inputs on the same page
     else {
+        // Variables assigning the inputs being received from the form above
+        $in_first_name = isset($_POST['firstname']) ? $_POST['firstname'] : null;
+        $in_last_name = isset($_POST['lastname']) ? $_POST['lastname'] : null;
+        // Default 'points' in point system
+        $default_points = 200;
+
+        // Inserting it into mySQL database
+        mysqli_query($db_connection, "INSERT INTO e_Member (firstName, lastName, points, uid) VALUES 
+        ('$in_first_name', '$in_last_name', $default_points, $user_id)");
+
+        // Grab the newly inserted member's id and fill in additional info about them
+        $member_id_query = mysqli_query($db_connection, "SELECT id FROM e_Member WHERE uid = $user_id");
+        $member_info_array = mysqli_fetch_assoc($member_id_query);
+        // Assigns the session's logged in member to this id.
+        $_SESSION['member_id'] = $member_info_array['id'];
+
+        // Inserts the additional information about the member
+        $id = $_SESSION['member_id'];
+        mysqli_query($db_connection, "INSERT INTO e_Info (member_id, dateSignedUp) VALUES
+        ($id, CURDATE())");
+
+        // Tells user that the sign_up was successful and redirects them the member signup page
+        echo '
+        <div class="form_container">
+            <h3 class="sign_up">Member signup successful. Redirecting to home page.</h3>
+        </div>
+        ';
+
+        header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+        die();
     }
     ?>
 
     <script>
-        // JS for disabling and enabling button based on user choice
+        // JS for making the submit button appear and disappear based on current user choice
         function radioHandler(src) {
             var button = document.getElementById("reg");
 
