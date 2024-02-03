@@ -10,15 +10,12 @@ if (isset($_SESSION['user_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
         die();
     }
-} else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
-    die();
 }
 
 // Common SESSION variables that are always used.
 $user_id = $_SESSION['user_id'];
 
-$member_submit = $_POST['member'];
+$reg_submit = $_POST['reg'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +32,7 @@ $member_submit = $_POST['member'];
     <?php
     require 'includes/navbar.php';
     // Checks if the user has submitted the page on the form, if they haven't display the form
-    if (!isset($member_submit)) {
+    if (!isset($reg_submit)) {
     ?>
         <div class="container">
             <div class="form_container">
@@ -56,13 +53,15 @@ $member_submit = $_POST['member'];
                             <label for="agreement">By choosing yes, you agreed to the previous <br>
                                 terms and conditions and the rules of our agency.</label>
                             <br>
-                            <input type="radio" name="agree" id="agreeNo" value="Yes" onchange="radioHandler(this)" required>
-                            <label for="yesTerms">Yes</label>
-                            <input type="radio" name="agree" id="termsYes" value="No" onchange="radioHandler(this)" checked>
-                            <label for="noTerms">No</label>
+                            <div class="radio_container">
+                                <input type="radio" name="agree" id="agreeNo" value="Yes" onchange="radioHandler(this)" required>
+                                <label for="yesTerms">Yes</label>
+                                <input type="radio" name="agree" id="termsYes" value="No" onchange="radioHandler(this)" checked>
+                                <label for="noTerms">No</label>
+                            </div>
                         </div>
 
-                        <input type="submit" name="member" class="submit register" id="member" value="Finish Registration">
+                        <input type="submit" name="reg" class="submit register" id="reg" style="display: none;" value="Finish Registration">
                         <br><br>
                     </form>
                 </div>
@@ -78,12 +77,12 @@ $member_submit = $_POST['member'];
     <script>
         // JS for disabling and enabling button based on user choice
         function radioHandler(src) {
-            let submitButton = document.getElementById('member');
+            var button = document.getElementById("reg");
 
             if (src.value == "Yes") {
-                submitButton.disabled = false;
-            } else {
-                submitButton.disabled = true;
+                button.style.display = "block";
+            } else if (src.value == "No") {
+                button.style.display = "none";
             }
         }
     </script>

@@ -109,3 +109,8 @@ form .submit {
     font-size: 30px;
     text-align: center;
 }
+
+#member .radio_container {
+    width: fit-content;
+    margin: 1.0em auto;
+}

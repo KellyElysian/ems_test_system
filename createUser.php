@@ -78,9 +78,10 @@ if (!isset($_SESSION['term'])) {
         $insert_user = mysqli_query($db_connection, "INSERT INTO e_User (email, password, siteRole) VALUES ('$in_email', '$in_password', '$in_site_role')");
 
         // Grabs the registered user's id from the database and stores it as a session variable to be used everywhere
-        $user_id_results = mysqli_query($db_connection, "SELECT uid FROM e_Users WHERE email='$in_email'");
+        $user_id_results = mysqli_query($db_connection, "SELECT uid FROM e_User WHERE email='$in_email'");
         $user_info_array = mysqli_fetch_assoc($user_id_results);
         $_SESSION['user_id'] = $user_info_array['uid'];
+        echo $_SESSION['user_id'];
 
         // Tells user that the sign_up was successful and redirects them the member signup page
         echo '

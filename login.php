@@ -10,7 +10,7 @@ if (isset($_SESSION['user_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
         die();
     } else {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createProfile.php');
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
         die();
     }
 }
