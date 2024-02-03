@@ -1,0 +1,10 @@
+/* Default CSS File loaded on each page */
+body {
+    font-family: 'Mulish', sans-serif;
+    margin: 0;
+}
+
+.container {
+    width: 60%;
+    margin: 0 auto;
+}

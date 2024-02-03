@@ -1,17 +1,19 @@
+-- Dropping Tables
 DROP TABLE IF EXISTS e_Assign;
 DROP TABLE IF EXISTS e_Signup;
 DROP TABLE IF EXISTS e_Certs;
 DROP TABLE IF EXISTS e_Event;
 DROP TABLE IF EXISTS e_Info;
 DROP TABLE IF EXISTS e_Member;
-DROP TABLE IF EXISTS e_Login;
+DROP TABLE IF EXISTS e_User;
 
 
 -- Creating Tables
-CREATE TABLE e_Login (
+CREATE TABLE e_User (
     uid INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(25),
-    password VARCHAR(25)
+    email VARCHAR(25),
+    password VARCHAR(25),
+    siteRole VARCHAR(10)
 ) ENGINE = innodb;
 
 
@@ -21,7 +23,7 @@ CREATE TABLE e_Member (
     lastName VARCHAR(30) NOT NULL,
     points INT,
     uid INT NOT NULL,
-    FOREIGN KEY (uid) REFERENCES e_Login(uid)
+    FOREIGN KEY (uid) REFERENCES e_User(uid)
 ) ENGINE = innodb;
 
 
