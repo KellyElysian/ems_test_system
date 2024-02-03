@@ -4,7 +4,7 @@ require 'includes/config.php';
 
 // Default Permissions
 // Checks if they're logged in
-if (isset($_SESSION['login_id'])) {
+if (isset($_SESSION['user_id'])) {
     // Checks if they have created a profile (hence checking member_id session variable is set)
     if (isset($_SESSION['member_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');

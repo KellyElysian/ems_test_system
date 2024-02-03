@@ -4,7 +4,7 @@ require 'includes/config.php';
 
 // Default Permissions
 // Checks if they're logged in
-if (isset($_SESSION['login_id'])) {
+if (isset($_SESSION['user_id'])) {
     // Checks if they have created a profile (hence checking member_id session variable is set)
     if (isset($_SESSION['member_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
@@ -70,7 +70,13 @@ if (!isset($_SESSION['term'])) {
         // Checks if the inputted email is in the list of admin emails. This is using a ternary operator
         $in_site_role = in_array($in_email, $admin_emails) ? "Admin" : "Member";
 
-        //
+        // Inserting it into mySQL database
+        $insert_user = mysqli_query($db_connection, "INSERT INTO e_Users (email, password, siteRole) VALUES ($in_email, $in_password, $in_site_role)");
+
+        // Grabs the registered user's id from the database and stores it as a session variable to be used everywhere
+        $user_id_results = mysqli_query($db_connection, "SELECT uid FROM e_Users WHERE email='$in_email'");
+        $user_info_array = mysqli_fetch_assoc($user_id_results);
+        $_SESSION['user_id'] = $user_info_array['id'];
     }
     ?>
 </body>

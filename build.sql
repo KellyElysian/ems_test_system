@@ -51,7 +51,7 @@ CREATE TABLE e_Certs (
 ) ENGINE = innodb;
 
 
-CREATE TABLE e_Assign (
+CREATE TABLE e_Cert_Assign (
     cert_id INT NOT NULL,
     member_id INT NOT NULL,
     startDate DATE,
