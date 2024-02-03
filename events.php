@@ -15,10 +15,22 @@ $user_role = $_SESSION['role'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events</title>
     <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/events.css">
 </head>
 
 <body>
-
+    <?php require 'includes/navbar.php'; ?>
+    <div class="container">
+        <?php
+        if ($user_role == "Admin") {
+            echo '
+            <form action="createEvent.php" method="POST">
+                <input type="submit" name="create_event" class="create_event">
+            </form>
+            ';
+        }
+        ?>
+    </div>
 </body>
 
 </html>
