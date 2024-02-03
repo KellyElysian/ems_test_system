@@ -9,6 +9,11 @@ if (isset($_SESSION['user_id'])) {
     if (isset($_SESSION['member_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
         die();
+    } else {
+        // If they force themselves onto this page and they've already created their user account but not their member, 
+        // then redirects them to that page
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        die();
     }
 }
 
@@ -19,7 +24,6 @@ if (!isset($_SESSION['term'])) {
     header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
     die();
 }
-// unset($_SESSION['term']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,14 +56,14 @@ if (!isset($_SESSION['term'])) {
                         <input type="text" name="password" placeholder="Please enter your password here." pattern="[a-zA-Z0-9]+" minlength="6" maxlength="25" required>
                     </div>
 
-                    <input type="submit" name="create" class="submit register" value="Create User">
+                    <input type="submit" name="create" class="submit register" value="Sign Up">
                     <br><br>
                 </form>
             </div>
         </div>
     <?php
     }
-    // If they have clicked "proceed", process the choices and conditionally perform what happens next 
+    // If they have clicked "Sign Up", process the inputs into the mySQL database and redirects them to the createMember page
     else {
         // Puts the users associated email into an array to use inarray method to check if the user that is signing up should have a role of an admin 
         $admin_emails = array("admin1@iu.edu", "admin2@iu.edu");
@@ -77,6 +81,16 @@ if (!isset($_SESSION['term'])) {
         $user_id_results = mysqli_query($db_connection, "SELECT uid FROM e_Users WHERE email='$in_email'");
         $user_info_array = mysqli_fetch_assoc($user_id_results);
         $_SESSION['user_id'] = $user_info_array['id'];
+
+        // Tells user that the sign_up was successful and redirects them the member signup page
+        echo '
+        <div class="form_container">
+            <h3 class="sign_up">User signup successful. Redirecting to member signup.</h3>
+        </div>
+        ';
+
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        die();
     }
     ?>
 </body>

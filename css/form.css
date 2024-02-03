@@ -91,7 +91,20 @@ form .submit {
 /* 
     createUser.php
 */
-
 #user div h2 {
     font-size: 30px;
+    text-align: center;
+}
+
+#user .sign_up {
+    color: green;
+    font-size: 20px;
+}
+
+/* 
+    createMember.php
+*/
+#member div h2 {
+    font-size: 30px;
+    text-align: center;
 }

@@ -9,6 +9,11 @@ if (isset($_SESSION['user_id'])) {
     if (isset($_SESSION['member_id'])) {
         header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
         die();
+    } else {
+        // If they force themselves onto this page and they've already created their user account but not their member, 
+        // then redirects them to that page
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        die();
     }
 }
 
