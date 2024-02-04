@@ -28,7 +28,8 @@ require 'includes/config.php';
         }
 
         // Grabbing all future and current events from the database based on their date start
-        $events = mysqli_query($db_connection, "SELECT title, DATE_FORMAT() AS date_start
+        $events = mysqli_query($db_connection, "SELECT title, DATE_FORMAT(dateTimeStart, '%b %e, %y') AS date_start, DATE_FORMAT(dateTimeStart, '%h:%i %p') AS time_start,
+        DATE_FORMAT(dateTimeEnd, '%b %e, %y') AS date_end, DATE_FORMAT(dateTimeEnd, '%h:%i %p') AS time_end, location
         FROM e_Event WHERE DATE_FORMAT(dateTimeEnd, '%Y-%m-%d') >= CURDATE()");
 
         // Logic is a while loop that keep looping through each row until the end
@@ -40,9 +41,26 @@ require 'includes/config.php';
             $date_end = $event_info['date_end'];
             $time_end = $event_info['time_end'];
             $location = $event_info['location'];
-            $details = $event_info['details'];
 
-            // Displaying all the informati
+            // Displaying all the information
+            echo "
+            <div class='evt_container'>
+                <h4 class='header'>$title</h4>";
+            if ($date_start == $date_end) {
+                echo "
+                <p class='datetime'>$date_end, $time_start - $time_end</p>
+                ";
+            } else {
+                echo "
+                <p class='datetime'>$date_end $time_start - $date_end $time_end</p>
+                ";
+            }
+
+            echo "
+                <p class='location'>$location<p>
+                <a href='event.php' class='detail_link'>Click here for details and sign up</a>
+            </div>
+            ";
         }
         ?>
     </div>

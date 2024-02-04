@@ -41,7 +41,7 @@ $event_submit = $_POST['event_submit'];
                         <p class="headers">Please enter basic event information below:</p>
                         <div>
                             <label for="title">Event Title:</label>
-                            <input type="text" name="title" minlength="1" maxlength="50" pattern="^[a-zA-Z1-9]+$" required>
+                            <input type="text" name="title" minlength="1" maxlength="50" pattern="^[a-zA-Z1-9 ]+$" required>
                         </div>
                         <div>
                             <label for="title">Start Date & Time:</label>
@@ -55,11 +55,11 @@ $event_submit = $_POST['event_submit'];
                         <p class="headers">Please enter location details below:</p>
                         <div>
                             <label for="title">Street:</label>
-                            <input type="text" name="street" pattern="^[a-zA-Z1-9]+$" required>
+                            <input type="text" name="street" pattern="^[a-zA-Z1-9 ]+$" required>
                         </div>
                         <div>
                             <label for="title">City:</label>
-                            <input type="text" name="city" pattern="^[a-zA-Z]+$" required>
+                            <input type="text" name="city" pattern="^[a-zA-Z ]+$" required>
                         </div>
                         <div>
                             <label for="title">Zip:</label>
@@ -74,7 +74,7 @@ $event_submit = $_POST['event_submit'];
                         </div>
 
                         <div>
-                            <label for="agreement">Are all the details of the event confirmed to be correct?</label>
+                            <label for="agreement">Are all the details of the event confirmed?</label>
                             <br>
                             <div class="radio_container">
                                 <input type="radio" name="agree" id="agreeNo" value="Yes" onchange="radioHandler(this)" required>
