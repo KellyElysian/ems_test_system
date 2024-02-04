@@ -2,10 +2,6 @@
 // Automatically brings the config file
 require 'includes/config.php';
 
-// Regular SESSION variables for security reasons
-$member_id = $_SESSION['member_id'];
-$user_id = $_SESSION['user_id'];
-$user_role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +21,7 @@ $user_role = $_SESSION['role'];
         if ($user_role == "Admin") {
             echo '
             <form action="createEvent.php" method="POST">
-                <input type="submit" name="create_event" class="create_event">
+                <input type="submit" name="create_event" class="create_event" value="Create Event">
             </form>
             ';
         }

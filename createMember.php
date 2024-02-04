@@ -12,9 +12,6 @@ if (isset($_SESSION['user_id'])) {
     }
 }
 
-// Common SESSION variables that are always used.
-$user_id = $_SESSION['user_id'];
-
 $reg_submit = $_POST['reg'];
 ?>
 <!DOCTYPE html>

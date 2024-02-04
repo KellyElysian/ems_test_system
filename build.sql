@@ -37,9 +37,10 @@ CREATE TABLE e_Info (
 
 CREATE TABLE e_Event (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(35),
-    dateOf DATE,
-    location VARCHAR(60),
+    title VARCHAR(50),
+    dateTimeStart DATETIME,
+    dateTimeEnd DATETIME,
+    location VARCHAR(100),
     details TEXT
 ) ENGINE = innodb;
 
