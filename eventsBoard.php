@@ -30,7 +30,8 @@ require 'includes/config.php';
         // Grabbing all future and current events from the database based on their date start
         $events = mysqli_query($db_connection, "SELECT title, DATE_FORMAT(dateTimeStart, '%b %e, %y') AS date_start, DATE_FORMAT(dateTimeStart, '%h:%i %p') AS time_start,
         DATE_FORMAT(dateTimeEnd, '%b %e, %y') AS date_end, DATE_FORMAT(dateTimeEnd, '%h:%i %p') AS time_end, location
-        FROM e_Event WHERE DATE_FORMAT(dateTimeEnd, '%Y-%m-%d') >= CURDATE()");
+        FROM e_Event WHERE DATE_FORMAT(dateTimeEnd, '%Y-%m-%d') >= CURDATE()
+        ORDER BY date_start");
 
         // Logic is a while loop that keep looping through each row until the end
         while ($event_info = mysqli_fetch_assoc($events)) {

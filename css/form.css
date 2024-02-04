@@ -148,9 +148,11 @@ form .submit {
     font-weight: bold;
 }
 
-#event .details_box {
+#event .details_box,
+#event .title_box {
     width: 100%;
 }
+
 
 #event div h2 {
     font-size: 30px;
@@ -176,6 +178,10 @@ form .submit {
     color: rgb(0, 96, 0);
     font-size: 20px;
     text-align: center;
+}
+
+#event textarea {
+    font-size: 15px;
 }
 
 /* 
@@ -225,11 +231,6 @@ form .submit {
 
 #anno .anno_divs {
     width: 100%;
-}
-
-#anno .title label {
-    margin-right: 0.25em;
-    margin: 0 auto;
 }
 
 #anno textarea {

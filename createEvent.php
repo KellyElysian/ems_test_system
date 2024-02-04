@@ -41,7 +41,8 @@ $event_submit = $_POST['event_submit'];
                         <p class="headers">Please enter basic event information below:</p>
                         <div>
                             <label for="title">Event Title:</label>
-                            <input type="text" name="title" minlength="1" maxlength="100" pattern="^[a-zA-Z1-9 ]+$" required>
+                            <br>
+                            <textarea name="title" id="title_box" cols="30" rows="5" class="title_box" required></textarea>
                         </div>
                         <div>
                             <label for="starttime">Start Date & Time:</label>

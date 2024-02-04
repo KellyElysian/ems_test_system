@@ -92,7 +92,7 @@ $anno_submit = $_POST['anno_submit'];
             </div>
             ';
 
-            header('Refresh: 2; URL=https://cgi.luddy.indiana.edu/~keldong/ems/announcements.php');
+            header('Refresh: 2; URL=https://cgi.luddy.indiana.edu/~keldong/ems/annoBoard.php');
             die();
         }
         ?>
