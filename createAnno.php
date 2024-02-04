@@ -2,6 +2,9 @@
 // Automatically brings the config file
 require 'includes/config.php';
 
+// File allows for the generation of a random string
+require 'framework/random.php';
+
 // Default Permissions
 // Checks if they're logged in
 if (isset($_SESSION['role'])) {
@@ -78,12 +81,21 @@ $anno_submit = $_POST['anno_submit'];
             }
 
             // Input Variables
-            $anno_title = isset($_POST['title']) ? san_input($_POST['title']) : null;
-            $anno_details = isset($_POST['details']) ? san_input($_POST['details']) : null;
+            $anno_title = isset($_POST['title']) ? nl2br(san_input($_POST['title'])) : null;
+            $anno_details = isset($_POST['details']) ? nl2br(san_input($_POST['details'])) : null;
+            $anno_key = generateRandomString(12);
 
             // Inserting the announcement into the database
-            mysqli_query($db_connection, "INSERT INTO e_Announcement (title, dateTimeMade, details) VALUES
-            ('$anno_title', NOW(), '$anno_details')");
+            mysqli_query($db_connection, "INSERT INTO e_Announcement (title, dateTimeMade, details, uniqueIdentifier) VALUES
+            ('$anno_title', NOW(), '$anno_details', '$anno_key')");
+
+            // Following code block deals with getting the newly created announcement's id and linking it to the
+            // member/admin that created it.
+            $anno_id_query = mysqli_query($db_connection, "SELECT id FROM e_Announcement WHERE uniqueIdentifier = '$anno_key'");
+            $anno_id = mysqli_fetch_assoc($anno_id_query)['id'];
+
+            mysqli_query($db_connection, "INSERT INTO e_Anno_Creator (member_id, anno_id) VALUES
+            ($member_id, $anno_id)");
 
             // Tells the admin that announcement has been made and redirects them back to the announcements page
             echo '

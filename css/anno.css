@@ -41,3 +41,15 @@
     color: rgb(135, 181, 44);
     cursor: pointer;
 }
+
+/* 
+Specific announcement
+*/
+#spec .container {
+    width: 60%;
+}
+
+#spec .links {
+    color: rgb(48, 107, 255);
+    text-decoration: none;
+}

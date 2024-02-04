@@ -29,7 +29,7 @@ require 'includes/config.php';
 
         // Grabbing all announcements and ordering them all by newest one (date first then time)
         $annos = mysqli_query($db_connection, "SELECT id, title, DATE_FORMAT(dateTimeMade, '%b %e, %y') AS date_made, 
-        DATE_FORMAT(dateTimeMade, '%h:%i %p') AS time_made
+        DATE_FORMAT(dateTimeMade, '%l:%i %p') AS time_made
         FROM e_Announcement
         ORDER BY date_made, time_made DESC");
 
@@ -45,14 +45,14 @@ require 'includes/config.php';
             echo "
             <div class='anno_container'>
                 <h4 class='header'>$title</h4>";
-            echo "
-                <p class='datetime'>$date_made | $time_made </p>
-                <form id='anno_form' method='POST' action='anno.php'>
-                    <input type='hidden' name='anno_id' value='$anno_id'>
-                    <button type='submit' class='sub_button'>Click here for announcement details</button>
+            echo '
+                <p class="datetime">' . $date_made . ' | ' . $time_made . '</p>
+                <form method="POST" action="anno.php">
+                    <input type="hidden" name="anno_id" value="' . $anno_id . '">
+                    <button type="submit" class="sub_button">Click here for announcement details</button>
                 </form>
             </div>
-            ";
+            ';
         }
         ?>
     </div>

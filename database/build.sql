@@ -1,12 +1,13 @@
--- Dropping Tables
-DROP TABLE IF EXISTS e_Assign;
-DROP TABLE IF EXISTS e_Signup;
-DROP TABLE IF EXISTS e_Cert;
-DROP TABLE IF EXISTS e_Event;
-DROP TABLE IF EXISTS e_Info;
-DROP TABLE IF EXISTS e_Member;
-DROP TABLE IF EXISTS e_User;
-DROP TABLE IF EXISTS e_Announcement;
+-- Dropping Tables (DO NOT UNCOMMENT UNLESS NEEDED)
+-- DROP TABLE IF EXISTS e_Anno_Creator;
+-- DROP TABLE IF EXISTS e_Assign;
+-- DROP TABLE IF EXISTS e_Signup;
+-- DROP TABLE IF EXISTS e_Cert;
+-- DROP TABLE IF EXISTS e_Event;
+-- DROP TABLE IF EXISTS e_Info;
+-- DROP TABLE IF EXISTS e_Member;
+-- DROP TABLE IF EXISTS e_User;
+-- DROP TABLE IF EXISTS e_Announcement;
 
 
 -- Creating Tables
@@ -76,5 +77,14 @@ CREATE TABLE e_Announcement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title TEXT NOT NULL,
     dateTimeMade DATETIME, 
-    details TEXT
+    details TEXT,
+    uniqueIdentifier VARCHAR(12)
+) ENGINE = innodb;
+
+
+CREATE TABLE e_Anno_Creator (
+    member_id INT,
+    anno_id INT,
+    FOREIGN KEY (member_id) REFERENCES e_Member(id),
+    FOREIGN KEY (anno_id) REFERENCES e_Announcement(id)
 ) ENGINE = innodb;
