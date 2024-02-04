@@ -236,3 +236,7 @@ form .submit {
 #anno textarea {
     font-size: 15px;
 }
+
+#anno .inner_container {
+    width: 65%;
+}

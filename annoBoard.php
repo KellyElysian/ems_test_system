@@ -35,15 +35,15 @@ require 'includes/config.php';
 
         // Logic is a while loop that keep looping through each row until the end
         while ($anno_info = mysqli_fetch_assoc($annos)) {
-            // Storing all event information as variables (Only title, time start, and end, and location.)
+            // Storing all announcement information as variables
             $anno_id = $anno_info['id'];
             $title = $anno_info['title'];
             $date_made = $anno_info['date_made'];
             $time_made = $anno_info['time_made'];
 
-            // Displaying all the information
+            // Displaying all the information about the announcement
             echo "
-            <div class='evt_container'>
+            <div class='anno_container'>
                 <h4 class='header'>$title</h4>";
             echo "
                 <p class='datetime'>$date_made | $time_made </p>

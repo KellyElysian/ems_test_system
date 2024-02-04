@@ -35,7 +35,7 @@ $anno_submit = $_POST['anno_submit'];
         if (!isset($anno_submit)) {
         ?>
             <div class="form_container">
-                <div>
+                <div class="inner_container">
                     <h2>Make Announcement Form</h2>
                     <form method="POST">
                         <div class="anno_divs title">
