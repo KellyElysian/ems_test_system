@@ -104,7 +104,7 @@ $event_submit = $_POST['event_submit'];
 
             $evt_details = isset($_POST['details']) ? $_POST['details'] : null;
 
-
+            // Inserting the event into the database
             mysqli_query($db_connection, "INSERT INTO e_Event (title, dateTimeStart, dateTimeEnd, location, details) VALUES
             ('$evt_title', '$evt_start', '$evt_end', '$evt_location', '$evt_details')");
 
@@ -115,7 +115,7 @@ $event_submit = $_POST['event_submit'];
             </div>
             ';
 
-            header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/events.php');
+            header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/eventsBoard.php');
             die();
         }
         ?>
