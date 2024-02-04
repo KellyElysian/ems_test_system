@@ -1,11 +1,12 @@
 -- Dropping Tables
 DROP TABLE IF EXISTS e_Assign;
 DROP TABLE IF EXISTS e_Signup;
-DROP TABLE IF EXISTS e_Certs;
+DROP TABLE IF EXISTS e_Cert;
 DROP TABLE IF EXISTS e_Event;
 DROP TABLE IF EXISTS e_Info;
 DROP TABLE IF EXISTS e_Member;
 DROP TABLE IF EXISTS e_User;
+DROP TABLE IF EXISTS e_Announcement;
 
 
 -- Creating Tables
@@ -37,7 +38,7 @@ CREATE TABLE e_Info (
 
 CREATE TABLE e_Event (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(50),
+    title TEXT,
     dateTimeStart DATETIME,
     dateTimeEnd DATETIME,
     location VARCHAR(100),
@@ -45,9 +46,9 @@ CREATE TABLE e_Event (
 ) ENGINE = innodb;
 
 
-CREATE TABLE e_Certs (
+CREATE TABLE e_Cert (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50),
+    name VARCHAR(100),
     idenNumber INT
 ) ENGINE = innodb;
 
@@ -63,9 +64,17 @@ CREATE TABLE e_Cert_Assign (
 
 
 CREATE TABLE e_Signup (
-member_id INT NOT NULL,
-event_id INT NOT NULL,
-memberRole VARCHAR(20),
-FOREIGN KEY (member_id) REFERENCES e_Member(id),
-FOREIGN KEY (event_id) REFERENCES e_Event(id)
+    member_id INT NOT NULL,
+    event_id INT NOT NULL,
+    memberRole VARCHAR(20),
+    FOREIGN KEY (member_id) REFERENCES e_Member(id),
+    FOREIGN KEY (event_id) REFERENCES e_Event(id)
+) ENGINE = innodb;
+
+
+CREATE TABLE e_Announcement (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title TEXT NOT NULL,
+    dateTimeMade DATETIME, 
+    details TEXT
 ) ENGINE = innodb;

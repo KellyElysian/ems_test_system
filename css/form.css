@@ -177,3 +177,61 @@ form .submit {
     font-size: 20px;
     text-align: center;
 }
+
+/* 
+    createAnno.php
+*/
+
+#anno .headers {
+    font-size: 16px;
+    margin: 1.5em 0 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+#anno .details_box {
+    width: 100%;
+}
+
+#anno .title_box {
+    width: 100%;
+}
+
+#anno div h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+#anno .radio_container {
+    width: fit-content;
+    margin: 1.0em auto;
+}
+
+#anno .evt {
+    border: none;
+    background-color: rgb(156, 195, 255);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.6em 0.5em;
+    border-radius: 25px;
+}
+
+#anno .complete {
+    color: rgb(0, 96, 0);
+    font-size: 20px;
+    text-align: center;
+}
+
+#anno .anno_divs {
+    width: 100%;
+}
+
+#anno .title label {
+    margin-right: 0.25em;
+    margin: 0 auto;
+}
+
+#anno textarea {
+    font-size: 15px;
+}

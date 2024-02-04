@@ -22,7 +22,7 @@ require 'includes/config.php';
         if ($user_role == "Admin") {
             echo '
             <form action="https://cgi.luddy.indiana.edu/~keldong/ems/createEvent.php" method="POST">
-                <input type="submit" name="create_event" class="create_event" value="Create Event">
+                <input type="submit" class="create_event" value="Create Event">
             </form>
             ';
         }

@@ -11,7 +11,7 @@ if (isset($_SESSION['role'])) {
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
     die();
 }
 
@@ -41,34 +41,34 @@ $event_submit = $_POST['event_submit'];
                         <p class="headers">Please enter basic event information below:</p>
                         <div>
                             <label for="title">Event Title:</label>
-                            <input type="text" name="title" minlength="1" maxlength="50" pattern="^[a-zA-Z1-9 ]+$" required>
+                            <input type="text" name="title" minlength="1" maxlength="100" pattern="^[a-zA-Z1-9 ]+$" required>
                         </div>
                         <div>
-                            <label for="title">Start Date & Time:</label>
+                            <label for="starttime">Start Date & Time:</label>
                             <input type="datetime-local" name="date_time_start" required>
                         </div>
                         <div>
-                            <label for="title">End Date & Time:</label>
+                            <label for="endtime">End Date & Time:</label>
                             <input type="datetime-local" name="date_time_end" required>
                         </div>
 
                         <p class="headers">Please enter location details below:</p>
                         <div>
-                            <label for="title">Street:</label>
+                            <label for="street">Street:</label>
                             <input type="text" name="street" pattern="^[a-zA-Z1-9 ]+$" required>
                         </div>
                         <div>
-                            <label for="title">City:</label>
+                            <label for="city">City:</label>
                             <input type="text" name="city" pattern="^[a-zA-Z ]+$" required>
                         </div>
                         <div>
-                            <label for="title">Zip:</label>
+                            <label for="zip">Zip:</label>
                             <input type="text" name="zip" pattern="^[0-9]*$" required>
                         </div>
 
                         <p class="headers">Please enter event details below:</p>
                         <div>
-                            <label for="title">Details & Description of the event:</label>
+                            <label for="details">Details & Description of the event:</label>
                             <br>
                             <textarea name="details" id="details_box" cols="30" rows="10" class="details_box" required></textarea>
                         </div>
@@ -90,25 +90,35 @@ $event_submit = $_POST['event_submit'];
             </div>
         <?php
         } else {
+            // This function is used to purely "sanitize" or clean up inputs before submitting them into the database
+            function san_input($input)
+            {
+                $sani = trim($input);
+                $sani = stripslashes($sani);
+                $sani = htmlspecialchars($sani);
+
+                return $sani;
+            }
+
             // Input Variables
             $evt_title = isset($_POST['title']) ? $_POST['title'] : null;
-            $int_start = isset($_POST['date_time_start']) ? $_POST['date_time_start'] : null;
+            $int_start = isset($_POST['date_time_start']) ? san_input($_POST['date_time_start']) : null;
             $evt_start = str_replace("T", " ", $int_start);
-            $int_end = isset($_POST['date_time_end']) ? $_POST['date_time_end'] : null;
+            $int_end = isset($_POST['date_time_end']) ? san_input($_POST['date_time_end']) : null;
             $evt_end = str_replace("T", " ", $int_end);
 
-            $evt_str = isset($_POST['street']) ? $_POST['street'] : null;
-            $evt_city = isset($_POST['city']) ? $_POST['city'] : null;
-            $evt_zip = isset($_POST['zip']) ? $_POST['zip'] : null;
+            $evt_str = isset($_POST['street']) ? san_input($_POST['street']) : null;
+            $evt_city = isset($_POST['city']) ? san_input($_POST['city']) : null;
+            $evt_zip = isset($_POST['zip']) ? san_input($_POST['zip']) : null;
             $evt_location = $evt_str . ", " . $evt_city . ", " . $evt_zip;
 
-            $evt_details = isset($_POST['details']) ? $_POST['details'] : null;
+            $evt_details = isset($_POST['details']) ? san_input($_POST['details']) : null;
 
             // Inserting the event into the database
             mysqli_query($db_connection, "INSERT INTO e_Event (title, dateTimeStart, dateTimeEnd, location, details) VALUES
             ('$evt_title', '$evt_start', '$evt_end', '$evt_location', '$evt_details')");
 
-            // Tells the admin that event creation was successful and redirects them
+            // Tells the admin that event creation was successful and redirects them back to the eventboard
             echo '
             <div class="form_container">
                 <h3 class="complete">Event creation successful. Redirecting to event page.</h3>

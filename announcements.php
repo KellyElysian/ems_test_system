@@ -1,0 +1,69 @@
+<?php
+// Automatically brings the config file
+require 'includes/config.php';
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/anno.css">
+</head>
+
+<body>
+    <?php require 'includes/navbar.php'; ?>
+    <div class="container">
+        <?php
+        // Checks if the user is an admin, if they are, display a otherwise hidden button for creating events
+        if ($user_role == "Admin") {
+            echo '
+            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/createAnno.php" method="POST">
+                <input type="submit" class="create_anno" value="Make an Announcement">
+            </form>
+            ';
+        }
+
+        // // Grabbing all future and current events from the database based on their date start
+        // $events = mysqli_query($db_connection, "SELECT title, DATE_FORMAT(dateTimeStart, '%b %e, %y') AS date_start, DATE_FORMAT(dateTimeStart, '%h:%i %p') AS time_start,
+        // DATE_FORMAT(dateTimeEnd, '%b %e, %y') AS date_end, DATE_FORMAT(dateTimeEnd, '%h:%i %p') AS time_end, location
+        // FROM e_Event WHERE DATE_FORMAT(dateTimeEnd, '%Y-%m-%d') >= CURDATE()");
+
+        // // Logic is a while loop that keep looping through each row until the end
+        // while ($event_info = mysqli_fetch_assoc($events)) {
+        //     // Storing all event information as variables (Only title, time start, and end, and location.)
+        //     $title = $event_info['title'];
+        //     $date_start = $event_info['date_start'];
+        //     $time_start = $event_info['time_start'];
+        //     $date_end = $event_info['date_end'];
+        //     $time_end = $event_info['time_end'];
+        //     $location = $event_info['location'];
+
+        //     // Displaying all the information
+        //     echo "
+        //     <div class='evt_container'>
+        //         <h4 class='header'>$title</h4>";
+        //     if ($date_start == $date_end) {
+        //         echo "
+        //         <p class='datetime'>$date_end, $time_start - $time_end</p>
+        //         ";
+        //     } else {
+        //         echo "
+        //         <p class='datetime'>$date_end $time_start - $date_end $time_end</p>
+        //         ";
+        //     }
+
+        //     echo "
+        //         <p class='location'>$location<p>
+        //         <a href='event.php' class='detail_link'>Click here for details and sign up</a>
+        //     </div>
+        //     ";
+        // }
+        ?>
+    </div>
+</body>
+
+</html>

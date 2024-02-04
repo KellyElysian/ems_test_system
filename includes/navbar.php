@@ -22,7 +22,7 @@ $user_role = $_SESSION['role'];
     <nav>
         <a href="home.php">Home</a>
         <a href="eventsBoard.php">Events</a>
-        <a href="">Announcements</a>
+        <a href="announcements.php">Announcements</a>
         <?php
         // Based on logged in user's role, they may see different navigation bars
         if ($user_role == "Admin") {
