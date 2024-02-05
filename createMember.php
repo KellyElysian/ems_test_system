@@ -75,8 +75,8 @@ $reg_submit = $_POST['reg'];
         $default_points = 200;
 
         // Inserting it into mySQL database
-        mysqli_query($db_connection, "INSERT INTO e_Member (firstName, lastName, points, uid) VALUES 
-        ('$in_first_name', '$in_last_name', $default_points, $user_id)");
+        mysqli_query($db_connection, "INSERT INTO e_Member (firstName, lastName, points, status, uid) VALUES 
+        ('$in_first_name', '$in_last_name', $default_points, 1, $user_id)");
 
         // Grab the newly inserted member's id and fill in additional info about them
         $member_id_query = mysqli_query($db_connection, "SELECT id FROM e_Member WHERE uid = $user_id");

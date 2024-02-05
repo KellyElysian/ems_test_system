@@ -24,6 +24,7 @@ CREATE TABLE e_Member (
     firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(30) NOT NULL,
     points INT,
+    status BOOLEAN,
     uid INT NOT NULL,
     FOREIGN KEY (uid) REFERENCES e_User(uid)
 ) ENGINE = innodb;
@@ -89,3 +90,9 @@ CREATE TABLE e_Anno_Creator (
     FOREIGN KEY (member_id) REFERENCES e_Member(id),
     FOREIGN KEY (anno_id) REFERENCES e_Announcement(id)
 ) ENGINE = innodb;
+
+INSERT INTO e_Cert (name, idenNumber) VALUES
+("First Responder", 100),
+("EMT-B", 101),
+("EMT-A", 102),
+("Paramedic", 103);
