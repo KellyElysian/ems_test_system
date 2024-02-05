@@ -33,6 +33,7 @@ CREATE TABLE e_Member (
 CREATE TABLE e_Info (
     member_id INT NOT NULL,
     dateSignedUp DATE,
+    notes TEXT,
     FOREIGN KEY (member_id) REFERENCES e_Member(id)
 ) ENGINE = innodb;
 

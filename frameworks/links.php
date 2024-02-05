@@ -11,7 +11,7 @@ function _make_url_clickable_cb($matches)
         $ret = substr($url, -1);
         $url = substr($url, 0, strlen($url) - 1);
     }
-    return $matches[1] . "<a href=\"$url\" rel=\"nofollow\" class='links'>$url</a>" . $ret;
+    return $matches[1] . "<a href=\"$url\" rel=\"nofollow\" class='links' target='_blank'>$url</a>" . $ret;
 }
 
 function _make_web_ftp_clickable_cb($matches)
@@ -27,13 +27,13 @@ function _make_web_ftp_clickable_cb($matches)
         $ret = substr($dest, -1);
         $dest = substr($dest, 0, strlen($dest) - 1);
     }
-    return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\">$dest</a>" . $ret;
+    return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\" class='links' target='_blank'>$dest</a>" . $ret;
 }
 
 function _make_email_clickable_cb($matches)
 {
     $email = $matches[2] . '@' . $matches[3];
-    return $matches[1] . "<a href=\"mailto:$email\">$email</a>";
+    return $matches[1] . "<a href=\"mailto:$email\" class='links' target='_blank'>$email</a>";
 }
 
 function make_clickable($ret)

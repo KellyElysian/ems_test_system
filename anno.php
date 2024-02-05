@@ -5,15 +5,27 @@ require 'includes/config.php';
 // This file is one that contains the use of an existing framework used to convert links from regular text input
 require 'frameworks/links.php';
 
+// Default Permissions for announcements
+if (isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['member_id'])) {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        die();
+    }
+} else {
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    die();
+}
+
 // Processing the information about the annnoucemnt here because it is more appropriate and will allow for preloading
 // of event information before user sees anything on the specifc page.
 
 // Using the hidden field id value that was sent to get the rest of the announcement information.
 $anno_id = $_POST['anno_id'];
+$creator_name = $_POST['anno_creator'];
 
 // Query that uses the anno_id that was retrieved to find the specific announcement
 $anno_query = mysqli_query($db_connection, "SELECT id, title, DATE_FORMAT(dateTimeMade, '%b %e, %y') AS date_made, 
-DATE_FORMAT(dateTimeMade, '%l:%i %p') AS time_made, details
+DATE_FORMAT(dateTimeMade, '%H:%i') AS time_made, details
 FROM e_Announcement
 WHERE id = $anno_id");
 // Stores the information in a single array because this should be only one specific announcement
@@ -41,7 +53,8 @@ $details = $anno_array['details'];
     <?php require 'includes/navbar.php'; ?>
     <div class="container">
         <h2><?php echo $title; ?></h2>
-        <p><?php echo $date . " | " . $time; ?></p>
+        <p class="create_container">Made by <?php echo "<span class='creator'>$creator_name</span>"; ?></p>
+        <p class="datetime_container"><?php echo $date . " | " . $time; ?></p>
         <p><?php echo make_clickable($details); ?></p>
     </div>
 </body>

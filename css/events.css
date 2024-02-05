@@ -17,7 +17,7 @@ form {
 
 .evt_container {
     width: 30%;
-    margin: 0 auto;
+    margin: 1.5em auto;
     border: 2px dotted lightseagreen;
     padding: 0.5em 1.5em;
 }

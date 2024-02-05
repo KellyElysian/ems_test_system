@@ -32,18 +32,28 @@ $user_role = $_SESSION['role'];
         }
 
         if (isset($member_id)) {
-            echo '<a href="">Profile</a>';
+            echo '
+            <form id="profileForm" action="profiles/profile.php" method="POST" class="nav_profile_form">
+                <input type="hidden" value="' . $user_id . '" name="view_user_id">
+                <a href="#" onclick="submitForm()" class="profile_a">Profile</a>
+            </form>';
         }
 
         // Checks if the member_id is set meaning the user is logged in and has a profile
         // If not, show the login button, if they are logged in, shows the logout button instead
         if (!isset($member_id)) {
-            echo '<a href="login.php" class="nav_button">Login</a>';
+            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login.php" class="nav_button">Login</a>';
         } else {
-            echo '<a href="logout.php" class="nav_button">Logout</a>';
+            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/logout.php" class="nav_button">Logout</a>';
         }
         ?>
     </nav>
+
+    <script>
+        function submitForm() {
+            document.getElementById("profileForm").submit();
+        }
+    </script>
 </body>
 
 </html>

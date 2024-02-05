@@ -7,7 +7,7 @@
 
 .create_anno {
     border: none;
-    background-color: rgb(255, 102, 173);
+    background-color: rgb(255, 150, 199);
     font-size: 16px;
     font-weight: bold;
     padding: 0.6em 0.5em;
@@ -42,6 +42,10 @@
     cursor: pointer;
 }
 
+.creator {
+    font-weight: bold;
+}
+
 /* 
 Specific announcement
 */
@@ -52,4 +56,16 @@ Specific announcement
 #spec .links {
     color: rgb(48, 107, 255);
     text-decoration: none;
+}
+
+#spec .create_container {
+    width: fit-content;
+    padding: 0.5em;
+    border: 2px solid rgb(126, 183, 39);
+}
+
+#spec .datetime_container {
+    width: fit-content;
+    padding: 0.5em;
+    border: 2px solid skyblue;
 }

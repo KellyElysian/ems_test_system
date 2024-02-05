@@ -3,7 +3,7 @@
 require 'includes/config.php';
 
 // File allows for the generation of a random string
-require 'framework/random.php';
+require 'frameworks/random.php';
 
 // Default Permissions
 // Checks if they're logged in
