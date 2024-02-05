@@ -1,9 +1,11 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
+
 
 // File allows for the generation of a random string
-require 'frameworks/random.php';
+require $dir . '/frameworks/random.php';
 
 // Default Permissions
 // Checks if they're logged in
@@ -14,7 +16,7 @@ if (isset($_SESSION['role'])) {
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 
@@ -27,12 +29,13 @@ $anno_submit = $_POST['anno_submit'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Make an Announcement</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body id="anno">
-    <?php require 'includes/navbar.php'; ?>
+    <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <?php
         if (!isset($anno_submit)) {
@@ -63,7 +66,7 @@ $anno_submit = $_POST['anno_submit'];
                             </div>
                         </div>
 
-                        <input type="submit" name="anno_submit" class="submit evt" id="anno_submit" style="display: none;" value="Create Event">
+                        <input type="submit" name="anno_submit" class="submit ano" id="anno_submit" style="display: none;" value="Create Announcement">
                     </form>
                 </div>
             </div>
@@ -104,7 +107,7 @@ $anno_submit = $_POST['anno_submit'];
             </div>
             ';
 
-            header('Refresh: 2; URL=https://cgi.luddy.indiana.edu/~keldong/ems/annoBoard.php');
+            header('Refresh: 2; URL=https://cgi.luddy.indiana.edu/~keldong/ems/annos/annoBoard.php');
             die();
         }
         ?>

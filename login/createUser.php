@@ -1,18 +1,20 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
+
 
 // Default Permissions
 // Checks if they're logged in
 if (isset($_SESSION['user_id'])) {
     // Checks if they have created a profile (hence checking member_id session variable is set)
     if (isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+        header("Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php");
         die();
     } else {
         // If they force themselves onto this page and they've already created their user account but not their member, 
         // then redirects them to that page
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
         die();
     }
 }
@@ -21,7 +23,7 @@ $create_submit = $_POST['create'];
 
 // Ensures user can not directly enter this createUser page if they haven't accepted the terms and conditions
 if (!isset($_SESSION['term'])) {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 ?>
@@ -32,13 +34,14 @@ if (!isset($_SESSION['term'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registering User</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body id="user">
     <?php
-    require 'includes/navbar.php';
+    require $dir . '/includes/navbar.php';
     // Checks if the user has submitted the page on the form, if they haven't display the form
     if (!isset($create_submit)) {
     ?>
@@ -89,7 +92,7 @@ if (!isset($_SESSION['term'])) {
         </div>
         ';
 
-        header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
         die();
     }
     ?>

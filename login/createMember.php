@@ -1,13 +1,15 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
+
 
 // Default Permissions
 // Checks if they're logged in
 if (isset($_SESSION['user_id'])) {
     // Checks if they have created a profile (hence checking member_id session variable is set)
     if (isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+        header("Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php");
         die();
     }
 }
@@ -21,13 +23,14 @@ $reg_submit = $_POST['reg'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registering Member</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body id="member">
     <?php
-    require 'includes/navbar.php';
+    require $dir . '/includes/navbar.php';
     // Checks if the user has submitted the page on the form, if they haven't display the form
     if (!isset($reg_submit)) {
     ?>
@@ -101,7 +104,7 @@ $reg_submit = $_POST['reg'];
         </div>
         ';
 
-        header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+        header("Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/home.php");
         die();
     }
     ?>

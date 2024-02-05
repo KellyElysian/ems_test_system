@@ -1,18 +1,19 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
 
 // Default Permissions
 // Checks if they're logged in
 if (isset($_SESSION['user_id'])) {
     // Checks if they have created a profile (hence checking member_id session variable is set)
     if (isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+        header("Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php");
         die();
     } else {
         // If they force themselves onto this page and they've already created their user account but not their member, 
         // then redirects them to that page
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
         die();
     }
 }
@@ -26,13 +27,14 @@ $term_submit = $_POST['term'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms & Conditions</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body id="terms">
     <?php
-    require 'includes/navbar.php';
+    require $dir . '/includes/navbar.php';
     ?>
     <div class="container">
         <?php
@@ -97,7 +99,7 @@ $term_submit = $_POST['term'];
                 die();
             } else {
                 $_SESSION['term'] = 1;
-                header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createUser.php');
+                header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createUser.php');
                 die();
             }
         }

@@ -1,23 +1,24 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
 
 // This file is one that contains the use of an existing framework used to convert links from regular text input
-require 'frameworks/links.php';
+require $dir . '/frameworks/links.php';
 
 // Default Permissions for announcements
 if (isset($_SESSION['user_id'])) {
     if (!isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 
 // Processing the information about the annnoucemnt here because it is more appropriate and will allow for preloading
-// of event information before user sees anything on the specifc page.
+// of announcement information before user sees anything on the specifc page.
 
 // Using the hidden field id value that was sent to get the rest of the announcement information.
 $anno_id = $_POST['anno_id'];
@@ -45,12 +46,13 @@ $details = $anno_array['details'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/anno.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/anno.css">
 </head>
 
 <body id="spec">
-    <?php require 'includes/navbar.php'; ?>
+    <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <h2><?php echo $title; ?></h2>
         <p class="create_container">Made by <?php echo "<span class='creator'>$creator_name</span>"; ?></p>

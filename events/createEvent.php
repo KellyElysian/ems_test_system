@@ -1,6 +1,7 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
 
 // Default Permissions
 // Checks if they're logged in
@@ -11,7 +12,7 @@ if (isset($_SESSION['role'])) {
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 
@@ -24,12 +25,13 @@ $event_submit = $_POST['event_submit'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creating an Event</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body id="event">
-    <?php require 'includes/navbar.php'; ?>
+    <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <?php
         if (!isset($event_submit)) {
@@ -126,7 +128,7 @@ $event_submit = $_POST['event_submit'];
             </div>
             ';
 
-            header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/eventsBoard.php');
+            header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php');
             die();
         }
         ?>

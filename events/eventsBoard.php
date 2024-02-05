@@ -1,6 +1,17 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
+
+if (isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['member_id'])) {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+        die();
+    }
+} else {
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
+    die();
+}
 
 ?>
 <!DOCTYPE html>
@@ -10,18 +21,19 @@ require 'includes/config.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/events.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/events.css">
 </head>
 
 <body>
-    <?php require 'includes/navbar.php'; ?>
+    <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <?php
         // Checks if the user is an admin, if they are, display a otherwise hidden button for creating events
         if ($user_role == "Admin") {
             echo '
-            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/createEvent.php" method="POST">
+            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/events/createEvent.php" method="POST">
                 <input type="submit" class="create_event" value="Create Event">
             </form>
             ';

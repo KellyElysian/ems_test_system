@@ -21,8 +21,8 @@ $user_role = $_SESSION['role'];
 <body>
     <nav>
         <a href="https://cgi.luddy.indiana.edu/~keldong/ems/home.php">Home</a>
-        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/eventsBoard.php">Events</a>
-        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/annoBoard.php">Announcements</a>
+        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php">Events</a>
+        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/annos/annoBoard.php">Announcements</a>
         <?php
         // Based on logged in user's role, they may see different navigation bars
         if ($user_role == "Admin") {
@@ -42,9 +42,9 @@ $user_role = $_SESSION['role'];
         // Checks if the member_id is set meaning the user is logged in and has a profile
         // If not, show the login button, if they are logged in, shows the logout button instead
         if (!isset($member_id)) {
-            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login.php" class="nav_button">Login</a>';
+            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php" class="nav_button">Login</a>';
         } else {
-            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/logout.php" class="nav_button">Logout</a>';
+            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login/logout.php" class="nav_button">Logout</a>';
         }
         ?>
     </nav>

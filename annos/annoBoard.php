@@ -1,15 +1,16 @@
 <?php
 // Automatically brings the config file
-require 'includes/config.php';
+$dir = dirname(__DIR__, 1);
+require $dir . '/includes/config.php';
 
 // Default Permissions for announcements
 if (isset($_SESSION['user_id'])) {
     if (!isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/createMember.php');
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 
@@ -21,18 +22,19 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Announcements</title>
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/anno.css">
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/anno.css">
 </head>
 
 <body>
-    <?php require 'includes/navbar.php'; ?>
+    <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <?php
-        // Checks if the user is an admin, if they are, display a otherwise hidden button for creating events
+        // Checks if the user is an admin, if they are, display a otherwise hidden button for creating announcements
         if ($user_role == "Admin") {
             echo '
-            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/createAnno.php" method="POST" class="anno_button">
+            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/annos/createAnno.php" method="POST" class="anno_button">
                 <input type="submit" class="create_anno" value="Make an Announcement">
             </form>
             ';
@@ -67,7 +69,7 @@ if (isset($_SESSION['user_id'])) {
             echo '
                 <p> Made by <span class="creator">' . $creator_name . '</span></p>
                 <p class="datetime">' . $date_made . ' | ' . $time_made . '</p>
-                <form method="POST" action="anno.php">
+                <form method="POST" action="https://cgi.luddy.indiana.edu/~keldong/ems/annos/anno.php">
                     <input type="hidden" name="anno_creator" value="' . $creator_name . '">
                     <input type="hidden" name="anno_id" value="' . $anno_id . '">
                     <button type="submit" class="sub_button">Click here for announcement details</button>

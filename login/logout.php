@@ -1,4 +1,6 @@
 <?php
+// Directory getting root
+$dir = dirname(__DIR__, 1);
 // Initialize the session.
 // If you are using session_name("something"), don't forget it now!
 session_start();
