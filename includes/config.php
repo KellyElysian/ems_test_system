@@ -3,6 +3,13 @@
 $dir = dirname(__DIR__, 1);
 session_save_path($dir);
 
+// Set session garbage collection probability to 1 and divisor to 100 (1% chance)
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+// Set session lifetime to a shorter duration (e.g., 30 minutes)
+ini_set('session.gc_maxlifetime', 900);
+
 // Logs the session out if the activity is done and regenerates it. 
 $inactive_timeout = 900;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive_timeout)) {

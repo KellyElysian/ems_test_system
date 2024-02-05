@@ -4,6 +4,8 @@
 
 h2 {
     text-align: center;
+    border-bottom: 3px solid goldenrod;
+    padding-bottom: 0.5em;
 }
 
 .active {
@@ -23,9 +25,13 @@ h2 {
 
 .normal_info {
     width: 45%;
+    border-top: 3px solid rebeccapurple;
+    border-right: 3px solid rebeccapurple;
 }
 
 .admin_info {
     width: 45%;
     text-align: right;
+    border-top: 3px solid powderblue;
+    border-left: 3px solid powderblue;
 }

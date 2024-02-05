@@ -79,10 +79,16 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                 }
                 ?>
             </div>
-            <div class="admin_info">
-                <p><span class="bold">Additional Notes:</span><br>
-                    <?php echo $notes; ?></p>
-            </div>
+            <?php
+            if ($user_role == "Admin") {
+            ?>
+                <div class="admin_info">
+                    <p><span class="bold">Additional Notes:</span><br>
+                        <?php echo $notes; ?></p>
+                </div>
+            <?php
+            }
+            ?>
         </div>
 
     </div>
