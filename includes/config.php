@@ -3,6 +3,18 @@
 $dir = dirname(__DIR__, 1);
 session_save_path($dir);
 
+// Logs the session out if the activity is done and regenerates it. 
+$inactive_timeout = 900;
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive_timeout)) {
+    // Session has expired, destroy it
+    session_unset();
+    session_destroy();
+
+    // Redirect to login page or any other desired action
+    header("Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php");
+    exit();
+}
+
 // Starts the session, which will be used for permission, change of user viewing experience, and other website features.
 // Always include this at the beginning of every page incase, even if the page might not require it.
 session_start();
