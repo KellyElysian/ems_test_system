@@ -48,14 +48,15 @@ $notes = $p_array['i.notes'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $name; ?></title>
     <link rel="stylesheet" href="../css/default.css">
-    <!-- Navbar.css needs to be reloaded due to the directory levels being different -->
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 
 <body>
     <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <div class="normal">
+
         </div>
 
     </div>
