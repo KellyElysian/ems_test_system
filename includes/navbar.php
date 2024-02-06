@@ -22,7 +22,7 @@ require 'config.php';
         // Based on logged in user's role, they may see different navigation bars
         if ($user_role == "Admin") {
             echo '
-            <a href="">Directories</a>
+            <a href="https://cgi.luddy.indiana.edu/~keldong/ems/directories/directory.php">Directories</a>
             ';
         }
 

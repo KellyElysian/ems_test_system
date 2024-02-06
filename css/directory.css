@@ -1,0 +1,21 @@
+/* 
+    directory.php
+*/
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row nowrap;
+}
+
+.options {
+    width: 48%;
+    border: 3px solid saddlebrown;
+    margin: 1.0em 0 0.25em;
+    padding: 0.5em;
+    border-radius: 10px;
+}
+
+.catalog_headers {
+    text-align: center;
+    font-size: 35px;
+}
