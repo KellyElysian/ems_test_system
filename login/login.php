@@ -60,6 +60,7 @@ $login_submit = $_POST['login'];
                     $_SESSION['user_id'] = $email_array['uid'];
                     $_SESSION['role'] = $email_array['siteRole'];
                     $_SESSION['member_id'] = $user_profile_array['id'];
+                    $_SESSION['status'] = $user_profile_array['status'] == 1 ? "Active" : "Inactive";
 
                     echo '<p class="success">Login successful, you will be redirected to the home page shortly.</p>';
 

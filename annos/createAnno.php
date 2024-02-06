@@ -9,10 +9,15 @@ require $dir . '/frameworks/random.php';
 
 // Default Permissions
 // Checks if they're logged in
-if (isset($_SESSION['role'])) {
-    // Checks if they have created a profile (hence checking member_id session variable is set)
-    if ($_SESSION['role'] != "Admin") {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+if ($member_status == "Active") {
+    if (isset($_SESSION['role'])) {
+        // Checks if they have created a profile (hence checking member_id session variable is set)
+        if ($_SESSION['role'] != "Admin") {
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+            die();
+        }
+    } else {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
         die();
     }
 } else {

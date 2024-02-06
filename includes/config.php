@@ -33,6 +33,7 @@ $db_connection = mysqli_connect("db.luddy.indiana.edu", "i494f23_keldong", "my+s
 $member_id = $_SESSION['member_id'];
 $user_id = $_SESSION['user_id'];
 $user_role = $_SESSION['role'];
+$member_status = $_SESSION['status'];
 
 // Checks database connection
 if (mysqli_connect_errno()) {

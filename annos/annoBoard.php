@@ -4,13 +4,24 @@ $dir = dirname(__DIR__, 1);
 require $dir . '/includes/config.php';
 
 // Default Permissions for announcements
-if (isset($_SESSION['user_id'])) {
-    if (!isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+if ($member_status == "Active") {
+    if (isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['member_id'])) {
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+            die();
+        }
+    } else {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
+    echo
+    '
+    <script>
+        alert("Ask an admin to reactivate your member status!");
+    </script>
+    ';
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/home.php');
     die();
 }
 

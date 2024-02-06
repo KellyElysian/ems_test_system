@@ -4,14 +4,28 @@
 $dir = dirname(__DIR__, 1);
 require $dir . '/includes/config.php';
 
+// This file is one that contains the use of an existing framework used to convert links from regular text input
+require $dir . '/frameworks/links.php';
+
 // Default Permissions
-if (isset($_SESSION['user_id'])) {
-    if (!isset($_SESSION['member_id'])) {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+if ($member_status == "Active") {
+    if (isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['member_id'])) {
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+            die();
+        }
+    } else {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
+    echo
+    '
+    <script>
+        alert("Ask an admin to reactivate your member status!");
+    </script>
+    ';
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/home.php');
     die();
 }
 
@@ -37,7 +51,6 @@ $points = $p_array['points'];
 $status = $p_array['status'];
 $dateSigned = $p_array['dateSign'];
 $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional notes at the moment.";
-
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +69,16 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
     <?php require $dir . '/includes/navbar.php'; ?>
     <div class="container">
         <h2><?php echo $name; ?></h2>
+        <?php
+        if ($user_role == "Admin" || $user_id == $view_id) {
+            echo '
+            <form class="edit_form" method="POST" action="https://cgi.luddy.indiana.edu/~keldong/ems/profiles/editProfile.php">
+                <input type="hidden" value="' . $view_id . '" name="user_id">
+                <button type="submit" class="edit_button">Edit Profile</button>
+            </form>
+            ';
+        }
+        ?>
         <div class="normal">
             <div class="normal_info">
                 <h3>Basic Information</h3>
@@ -83,8 +106,9 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
             if ($user_role == "Admin") {
             ?>
                 <div class="admin_info">
+                    <h3>Admin Information</h3>
                     <p><span class="bold">Additional Notes:</span><br>
-                        <?php echo $notes; ?></p>
+                        <?php echo make_clickable($notes); ?></p>
                 </div>
             <?php
             }
