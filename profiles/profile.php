@@ -29,8 +29,15 @@ if ($member_status == "Active") {
     die();
 }
 
+// Checking if the session variable for specific profile is set, if it is, use that instead unsets it
 // Grabbing the user's id that the profile is associated with
-$view_id = $_POST['view_user_id'];
+if (isset($_SESSION['edit_id'])) {
+    $view_id = $_SESSION['edit_id'];
+    unset($_SESSION['edit_id']);
+} else {
+    $view_id = $_POST['view_user_id'];
+}
+
 
 // Grabbing all essential details to use for later use
 $profile_query = mysqli_query($db_connection, "SELECT u.email AS email, u.siteRole AS role, CONCAT(m.firstName, ' ', m.lastName) AS full_name,

@@ -16,18 +16,23 @@ if ($member_status == "Active") {
         die();
     }
 } else {
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
     echo
     '
     <script>
         alert("Ask an admin to reactivate your member status!");
     </script>
     ';
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
     die();
 }
 
+$edit_submit = $_POST['edit_submit'];
+if (!isset($edit_submit)) {
+    $_SESSION['edit_id'] = $_POST['user_id'];
+}
+
 // UserID that is being edited
-$view_id = $_POST['user_id'];
+$view_id = $_SESSION['edit_id'];
 
 // Grabbing all essential details to use for later use
 $profile_query = mysqli_query($db_connection, "SELECT m.id AS mid, u.email AS email, u.siteRole AS role, m.firstName AS firstname, m.lastName AS lastname,
@@ -55,7 +60,6 @@ $radio_select = $status == 1 ? $act = "checked" : $inact = "checked";
 $dateSigned = $p_array['dateSign'];
 $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional notes at the moment.";
 
-$edit_submit = $_POST['edit_submit'];
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +155,7 @@ $edit_submit = $_POST['edit_submit'];
             $e_fname = isset($_POST['firstname']) ? san_input($_POST['firstname']) : null;
             $e_lname = isset($_POST['lastname']) ? san_input($_POST['lastname']) : null;
             $e_points = isset($_POST['points']) ? san_input($_POST['points']) : null;
-            $e_status = $_POST['status'];
+            $e_status = $_POST['activity'];
             $e_notes  = isset($_POST['notes']) ? san_input($_POST['notes']) : null;
 
             // Update statements to update all information
@@ -168,12 +172,8 @@ $edit_submit = $_POST['edit_submit'];
             </script>
             ';
 
-            echo "
-            <form method='POST' action='https://cgi.luddy.indiana.edu/~keldong/ems/profiles/profile.php'
-                onload='submit()'>
-                <input type='hidden' value='$view_id' name='user_id'>
-            </form>
-            ";
+            header('Refresh: 1; URL=https://cgi.luddy.indiana.edu/~keldong/ems/profiles/profile.php');
+            die();
         }
         ?>
 
