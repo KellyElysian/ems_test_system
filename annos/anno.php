@@ -24,7 +24,7 @@ if ($member_status == "Active") {
         alert("Ask an admin to reactivate your member status!");
     </script>
     ';
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/home.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
     die();
 }
 

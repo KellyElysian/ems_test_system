@@ -22,7 +22,7 @@ if ($member_status == "Active") {
         alert("Ask an admin to reactivate your member status!");
     </script>
     ';
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/home.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
     die();
 }
 
@@ -147,8 +147,33 @@ $edit_submit = $_POST['edit_submit'];
                 return $sani;
             }
 
+            // Assigning all inputs to variables
             $e_fname = isset($_POST['firstname']) ? san_input($_POST['firstname']) : null;
             $e_lname = isset($_POST['lastname']) ? san_input($_POST['lastname']) : null;
+            $e_points = isset($_POST['points']) ? san_input($_POST['points']) : null;
+            $e_status = $_POST['status'];
+            $e_notes  = isset($_POST['notes']) ? san_input($_POST['notes']) : null;
+
+            // Update statements to update all information
+            mysqli_query($db_connection, "UPDATE e_Member SET firstname = '$e_fname' WHERE id = $mem_id");
+            mysqli_query($db_connection, "UPDATE e_Member SET lastname = '$e_lname' WHERE id = $mem_id");
+            mysqli_query($db_connection, "UPDATE e_Member SET points = $e_points WHERE id = $mem_id");
+            mysqli_query($db_connection, "UPDATE e_Member SET status = $e_status WHERE id = $mem_id");
+            mysqli_query($db_connection, "UPDATE e_Info SET notes = '$e_notes' WHERE member_id = $mem_id");
+
+            // Tells the user that the changes has been made
+            echo '
+            <script>
+                alert("The edits has been successfully processed");
+            </script>
+            ';
+
+            echo "
+            <form method='POST' action='https://cgi.luddy.indiana.edu/~keldong/ems/profiles/profile.php'
+                onload='submit()'>
+                <input type='hidden' value='$view_id' name='user_id'>
+            </form>
+            ";
         }
         ?>
 

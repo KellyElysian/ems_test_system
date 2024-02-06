@@ -21,7 +21,7 @@ if ($member_status == "Active") {
         die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
     die();
 }
 
