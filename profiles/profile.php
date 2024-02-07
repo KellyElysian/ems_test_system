@@ -40,7 +40,7 @@ if (isset($_SESSION['edit_id'])) {
 
 
 // Grabbing all essential details to use for later use
-$profile_query = mysqli_query($db_connection, "SELECT u.email AS email, u.siteRole AS role, CONCAT(m.firstName, ' ', m.lastName) AS full_name,
+$profile_query = mysqli_query($db_connection, "SELECT m.id AS mid, u.email AS email, u.siteRole AS role, CONCAT(m.firstName, ' ', m.lastName) AS full_name,
 m.points AS points, m.status AS status, DATE_FORMAT(i.dateSignedUp, '%b %e, %Y') AS dateSign, i.notes AS notes
 FROM e_User AS u
 JOIN e_Member AS m ON m.uid = u.uid
@@ -48,6 +48,7 @@ JOIN e_Info AS i ON i.member_id = m.id
 WHERE u.uid = $view_id");
 $p_array = mysqli_fetch_assoc($profile_query);
 
+$mem_id = $p_array['mid'];
 // Assigning all information to appropriate information
 $name = $p_array['full_name'];
 $email = $p_array['email'];
@@ -129,12 +130,27 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
         </div>
         <div class="right_container">
             <?php
+            // By default, only the latest edit will be shown
             if (!isset($edit_history)) {
+                // Grabbing information from database about the edit and the editor
+                $edit_query = mysqli_query($db_connection, "SELECT editor_id AS e_id, DATE_FORMAT(editTime, '%c-%e-%Y %l:%i') AS edit_time FROM e_Member_Edit WHERE member_edited = $mem_id
+                ORDER BY editTime
+                LIMIT 1");
+                $edit_array = mysqli_fetch_assoc($edit_array);
+                $edit_date = $edit_array['edit_time'];
+                $editor_id = $edit_array['e_id'];
+
+                $editor_query = mysqli_query($db_connection, "SELECT CONCAT(firstName, ' ', lastName) AS fullname FROM e_Member WHERE id = $editor_id");
+                $editor_arr = mysqli_fetch_assoc($editor_query);
+                $editor_name = $editor_arr['fullname'];
+
                 echo '
                 <p class="last_edit">
-                Last Edit Made By: 
+                Last Edit Made By: <br>
+                ' . $editor_name . ' at ' . $edit_Date . '
                 </p>
                 ';
+            } else {
             }
             ?>
         </div>

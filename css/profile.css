@@ -57,9 +57,17 @@ h2 {
     cursor: pointer;
 }
 
+/* 
+    profile.php - Edit History
+*/
+
 .left_container,
 .right_container {
     width: 25%;
+}
+
+.last_edit {
+    margin: 0.5em 1em 1.0em;
 }
 
 /* 

@@ -107,12 +107,12 @@ $anno_submit = $_POST['anno_submit'];
 
             // Tells the admin that announcement has been made and redirects them back to the announcements page
             echo '
-            <div class="form_container">
-                <h3 class="complete">Announcement was made. Redirecting to announcement page.</h3>
-            </div>
+            <script>
+                alert("Announcement was made. Redirecting to announcement page.");
+            </script>
             ';
 
-            header('Refresh: 2; URL=https://cgi.luddy.indiana.edu/~keldong/ems/annos/annoBoard.php');
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/annos/annoBoard.php');
             die();
         }
         ?>

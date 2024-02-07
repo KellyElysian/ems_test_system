@@ -165,14 +165,18 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
             mysqli_query($db_connection, "UPDATE e_Member SET status = $e_status WHERE id = $mem_id");
             mysqli_query($db_connection, "UPDATE e_Info SET notes = '$e_notes' WHERE member_id = $mem_id");
 
+            // Adding the edit into the edit history
+            mysqli_query($db_connection, "INSERT INTO e_Member_Edit (editor_id, member_edited, editTime) VALUES
+            ($member_id, $mem_id, NOW())");
+
             // Tells the user that the changes has been made
             echo '
             <script>
-                alert("The edits has been successfully processed");
+                alert("The edits has been successfully processed.");
             </script>
             ';
 
-            header('Refresh: 1; URL=https://cgi.luddy.indiana.edu/~keldong/ems/profiles/profile.php');
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/profiles/profile.php');
             die();
         }
         ?>

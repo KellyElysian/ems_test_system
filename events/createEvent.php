@@ -133,13 +133,11 @@ $event_submit = $_POST['event_submit'];
             ('$evt_title', '$evt_start', '$evt_end', '$evt_location', '$evt_details')");
 
             // Tells the admin that event creation was successful and redirects them back to the eventboard
-            echo '
-            <div class="form_container">
-                <h3 class="complete">Event creation successful. Redirecting to event page.</h3>
-            </div>
-            ';
+            echo '<script>
+            alert("Event creation successful. Redirecting to event page.");
+            </script>';
 
-            header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php');
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php');
             die();
         }
         ?>

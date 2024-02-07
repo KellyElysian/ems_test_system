@@ -39,7 +39,7 @@ CREATE TABLE e_Info (
 ) ENGINE = innodb;
 
 
-CREATE TABLE e_Edit (
+CREATE TABLE e_Member_Edit (
     editor_id INT,
     member_edited INT,
     editTime DATETIME,

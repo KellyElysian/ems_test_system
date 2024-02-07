@@ -95,7 +95,7 @@ $term_submit = $_POST['term'];
                 Therefore, you are unable to progress further in the sign-up process.</p>';
                 echo '<p class="denied">You will be redirected to our home page in 5 seconds.</p>';
 
-                header('Refresh: 5; URL=https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+                header('Refresh: 3; URL=https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
                 die();
             } else {
                 $_SESSION['term'] = 1;
