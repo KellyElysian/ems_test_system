@@ -74,54 +74,70 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
 
 <body>
     <?php require $dir . '/includes/navbar.php'; ?>
-    <div class="container">
-        <h2><?php echo $name; ?></h2>
-        <?php
-        if ($user_role == "Admin" || $user_id == $view_id) {
-            echo '
+    <div class="overall_container">
+        <div class="left_container">
+
+        </div>
+        <div class="mid_container">
+            <h2><?php echo $name; ?></h2>
+            <?php
+            if ($user_role == "Admin" || $user_id == $view_id) {
+                echo '
             <form class="edit_form" method="POST" action="https://cgi.luddy.indiana.edu/~keldong/ems/profiles/editProfile.php">
                 <input type="hidden" value="' . $view_id . '" name="user_id">
                 <button type="submit" class="edit_button">Edit Profile</button>
             </form>
             ';
-        }
-        ?>
-        <div class="normal">
-            <div class="normal_info">
-                <h3>Basic Information</h3>
-                <?php
-                // If the profile is active
-                if ($status == 1) {
-                ?>
-                    <p>Email: <?php echo $email; ?></p>
-                    <p>Role: <?php echo $role; ?></p>
-                    <p>Points: <?php echo $points; ?></p>
-                    <p>Member Status: <?php
-                                        $status_message = $status == 1 ? '<span class="active">Active</span>' : '<span class="inactive">Inactive</span>';
-                                        echo $status_message;
-                                        ?></p>
-                    <p>Date Signed Up: <?php echo $dateSigned; ?></p>
-                <?php
-                } else {
-                ?>
+            }
+            ?>
+            <div class="normal">
+                <div class="normal_info">
+                    <h3>Basic Information</h3>
+                    <?php
+                    // If the profile is active
+                    if ($status == 1) {
+                    ?>
+                        <p>Email: <?php echo $email; ?></p>
+                        <p>Role: <?php echo $role; ?></p>
+                        <p>Points: <?php echo $points; ?></p>
+                        <p>Member Status: <?php
+                                            $status_message = $status == 1 ? '<span class="active">Active</span>' : '<span class="inactive">Inactive</span>';
+                                            echo $status_message;
+                                            ?></p>
+                        <p>Date Signed Up: <?php echo $dateSigned; ?></p>
+                    <?php
+                    } else {
+                    ?>
 
+                    <?php
+                    }
+                    ?>
+                </div>
+                <?php
+                if ($user_role == "Admin") {
+                ?>
+                    <div class="admin_info">
+                        <h3>Admin Information</h3>
+                        <p><span class="bold">Additional Notes:</span><br>
+                            <?php echo make_clickable($notes); ?></p>
+                    </div>
                 <?php
                 }
                 ?>
             </div>
+
+        </div>
+        <div class="right_container">
             <?php
-            if ($user_role == "Admin") {
-            ?>
-                <div class="admin_info">
-                    <h3>Admin Information</h3>
-                    <p><span class="bold">Additional Notes:</span><br>
-                        <?php echo make_clickable($notes); ?></p>
-                </div>
-            <?php
+            if (!isset($edit_history)) {
+                echo '
+                <p class="last_edit">
+                Last Edit Made By: 
+                </p>
+                ';
             }
             ?>
         </div>
-
     </div>
 </body>
 

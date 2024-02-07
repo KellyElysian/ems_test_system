@@ -41,11 +41,17 @@ if ($member_status == "Active") {
         <div class="options">
             <h2 class="catalog_headers">Members</h2>
             <p class="catalog_desc">Click on the button below to view the catalog of all users that are registered within this system.</p>
+            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/directories/memberCatalog.php" method="post" class="form_block">
+                <button class="catalog_button">Member Catalog</button>
+            </form>
         </div>
 
         <div class="options">
             <h2 class="catalog_headers">Events</h2>
             <p class="catalog_desc">Click on the button below to view the catalog of all events (past or future) that are registered within this system.</p>
+            <form action="https://cgi.luddy.indiana.edu/~keldong/ems/directories/eventCatalog.php" method="post" class="form_block">
+                <button class="catalog_button">Event Catalog</button>
+            </form>
         </div>
 
     </div>

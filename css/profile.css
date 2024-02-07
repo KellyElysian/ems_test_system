@@ -1,4 +1,4 @@
-.container {
+.mid_container {
     width: 50%;
 }
 
@@ -6,6 +6,11 @@ h2 {
     text-align: center;
     border-bottom: 3px solid goldenrod;
     padding-bottom: 0.5em;
+}
+
+.overall_container {
+    display: flex;
+    flex-flow: row;
 }
 
 .active {
@@ -50,6 +55,11 @@ h2 {
     border-radius: 5px;
     background-color: rgb(174, 255, 255);
     cursor: pointer;
+}
+
+.left_container,
+.right_container {
+    width: 25%;
 }
 
 /* 

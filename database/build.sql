@@ -39,6 +39,15 @@ CREATE TABLE e_Info (
 ) ENGINE = innodb;
 
 
+CREATE TABLE e_Edit (
+    editor_id INT,
+    member_edited INT,
+    editTime DATETIME,
+    FOREIGN KEY (editor_id) REFERENCES e_Member(id),
+    FOREIGN KEY (member_edited) REFERENCES e_Member(id)
+) ENGINE = innodb;
+
+
 CREATE TABLE e_Event (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title TEXT,
@@ -90,6 +99,16 @@ CREATE TABLE e_Anno_Creator (
     FOREIGN KEY (member_id) REFERENCES e_Member(id),
     FOREIGN KEY (anno_id) REFERENCES e_Announcement(id)
 ) ENGINE = innodb;
+
+
+CREATE TABLE e_Anno_Edit (
+    member_id INT,
+    anno_id INT,
+    editTime DATETIME,
+    FOREIGN KEY (member_id) REFERENCES e_Member(id),
+    FOREIGN KEY (anno_id) REFERENCES e_Announcement(id)
+) ENGINE = innodb;
+
 
 INSERT INTO e_Cert (name, idenNumber) VALUES
 ("First Responder", 100),
