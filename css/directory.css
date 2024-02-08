@@ -4,7 +4,6 @@
 .container {
     display: flex;
     justify-content: space-between;
-    flex-flow: row nowrap;
 }
 
 .options {
@@ -38,4 +37,42 @@
     background-color: rgb(46, 59, 34);
     color: white;
     cursor: pointer;
+}
+
+/* 
+    memberCatalog.php
+*/
+
+#member .container {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row;
+    margin: 1.0em auto;
+}
+
+#member .member_block {
+    width: 18%;
+    padding: 0.5em;
+    border: 2px solid seagreen;
+}
+
+#member button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    margin: 0 auto;
+    display: block;
+    font-size: 23px;
+}
+
+#member .button_p {
+    margin: 0;
+}
+
+#member button:hover {
+    color: rgb(100, 200, 167);
 }

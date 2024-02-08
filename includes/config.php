@@ -40,3 +40,15 @@ if (mysqli_connect_errno()) {
     echo "Connection Failed" . mysqli_connect_error();
     exit;
 }
+
+
+/*
+Temp Library for Code Block
+
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
+
+
+
+*/

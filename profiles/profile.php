@@ -170,6 +170,16 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                     WHERE member_edited = $mem_id
                     ORDER BY editTime DESC");
 
+            // If there is no edit at all, display default
+            if (mysqli_num_rows($multi_edit_query) == 0) {
+                echo '
+                <p class="last_edit" id="single_edit">
+                Last Edit Made By: <br>
+                No edits are made on this member.
+                </p>
+                ';
+            }
+
             // Loops through all entries in the edit history table and grabs the names of the editor also and displays them.
             while ($edit_arr = mysqli_fetch_assoc($multi_edit_query)) {
                 $m_edit_time = $edit_arr['edit_time'];
@@ -179,7 +189,7 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                 $m_editor_arr = mysqli_fetch_assoc($m_editor_query);
                 $m_editor_name = $m_editor_arr['fullname'];
 
-                $edit_string = mysqli_num_rows($editor_query) > 0 ? $m_editor_name . " at " . $m_edit_time : "No last edit present.";
+                $edit_string = $m_editor_name . ' at ' . $m_edit_time;
                 echo '
                 <p id="single_edit">
                 Last Edit Made By: <br>

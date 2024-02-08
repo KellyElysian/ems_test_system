@@ -11,11 +11,14 @@ body {
     margin: 0 auto;
 }
 
-
 .bold {
     font-weight: bold;
 }
 
 .italic {
     font-style: italic;
+}
+
+.invis {
+    display: none;
 }
