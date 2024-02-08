@@ -5,19 +5,25 @@ require $dir . '/includes/config.php';
 
 // Default Permissions
 // Checks if they're logged in
-if ($member_status == "Active") {
-    if (isset($_SESSION['role'])) {
-        // Checks if they have created a profile (hence checking member_id session variable is set)
-        if ($_SESSION['role'] != "Admin") {
+if (isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['member_id'])) {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+        die();
+    } else {
+        if ($member_status != "Active") {
+            $_SESSION['reactivate'] = 1;
             header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
             die();
+        } else {
+            if ($user_role != "Admin") {
+                $_SESSION['no_perms'] = 1;
+                header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+                die();
+            }
         }
-    } else {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
-        die();
     }
 } else {
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 ?>

@@ -9,6 +9,13 @@ if ($_SESSION['reactivate'] == 1) {
     </script>';
     unset($_SESSION['reactivate']);
 }
+if ($_SESSION['no_perms'] == 1) {
+    echo '
+    <script>
+        alert("You do not have permissions to view that page!");
+    </script>';
+    unset($_SESSION['no_perms']);
+}
 ?>
 
 <!DOCTYPE html>

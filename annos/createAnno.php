@@ -13,6 +13,7 @@ if ($member_status == "Active") {
     if (isset($_SESSION['role'])) {
         // Checks if they have created a profile (hence checking member_id session variable is set)
         if ($_SESSION['role'] != "Admin") {
+            $_SESSION['no_perms'] = 1;
             header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
             die();
         }
