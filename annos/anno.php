@@ -7,24 +7,19 @@ require $dir . '/includes/config.php';
 require $dir . '/frameworks/links.php';
 
 // Default Permissions for announcements
-if ($member_status == "Active") {
-    if (isset($_SESSION['user_id'])) {
-        if (!isset($_SESSION['member_id'])) {
-            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+if (isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['member_id'])) {
+        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/createMember.php');
+        die();
+    } else {
+        if ($member_status != "Active") {
+            $_SESSION['reactivate'] = 1;
+            header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
             die();
         }
-    } else {
-        header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
-        die();
     }
 } else {
-    echo
-    '
-    <script>
-        alert("Ask an admin to reactivate your member status!");
-    </script>
-    ';
-    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/home.php');
+    header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php');
     die();
 }
 

@@ -2,6 +2,13 @@
 // Automatically brings the config file
 require 'includes/config.php';
 
+if ($_SESSION['reactivate'] == 1) {
+    echo '
+    <script>
+        alert("Ask an admin to reactivate your member status!");
+    </script>';
+    unset($_SESSION['reactivate']);
+}
 ?>
 
 <!DOCTYPE html>

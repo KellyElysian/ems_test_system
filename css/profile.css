@@ -67,7 +67,26 @@ h2 {
 }
 
 .last_edit {
+    margin: 0.75em 1.5em 0em;
+}
+
+#full_history {
+    width: 80%;
+    height: 200px;
+    margin: 0.5em 1em 0em;
+    padding: 0.25em 0.5em 0em;
+    border: 3px solid navajowhite;
+    overflow: scroll;
+}
+
+#view_single,
+#view_full {
     margin: 0.5em 1em 1.0em;
+    border: none;
+    background-color: navajowhite;
+    font-size: 18px;
+    color: rgb(78, 78, 122);
+    cursor: pointer;
 }
 
 /* 
