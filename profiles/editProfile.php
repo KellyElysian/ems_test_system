@@ -21,9 +21,31 @@ if (isset($_SESSION['user_id'])) {
     die();
 }
 
+// Checking if user submitted the form
 $edit_submit = $_POST['edit_submit'];
+// If they haven't, make sure the current edited user is correct
 if (!isset($edit_submit)) {
     $_SESSION['edit_id'] = $_POST['user_id'];
+}
+
+// Php server-side validation on certification date inputs
+if (isset($edit_submit)) {
+    $cp_start = $_POST['c_start'];
+    $cp_expire = $_POST['c_expire'];
+    $run_start = $_POST['r_start'];
+    $run_expire = $_POST['r_expire'];
+    // If both inputted start dates are after the expiration date
+    if (($cp_start >= $cp_expire) and ($run_start >= $run_expire)) {
+        $cp_error = 1;
+        $run_error = 1;
+        unset($edit_submit);
+    } else if ($cp_start >= $cp_expire) {
+        $cp_error = 1;
+        unset($edit_submit);
+    } else if ($run_start >= $run_expire) {
+        $run_error = 1;
+        unset($edit_submit);
+    }
 }
 
 // UserID that is being edited
@@ -54,7 +76,8 @@ $status = $p_array['status'];
 $radio_select = $status == 1 ? $act = "checked" : $inact = "checked";
 $dateSigned = $p_array['dateSign'];
 $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional notes at the moment.";
-
+// If the earlier validation check is passed
+if (!isset($cp_error) and !isset($run_error))
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +85,7 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=100%">
     <title><?php echo $name . "'s Profile"; ?></title>
     <link rel="stylesheet" href="../css/default.css">
     <link rel="stylesheet" href="../css/navbar.css">
@@ -79,46 +102,107 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
         if (!isset($edit_submit)) {
         ?>
             <h2>Editing <?php echo $name; ?>'s Profile</h2>
-            <form method="POST">
+            <form method="POST" name="formMain" id="formMain">
                 <h3 class="basic_header">Basic Information</h3>
-                <div class="input_blocks">
-                    <label for="firstname">First Name: </label>
-                    <br>
-                    <input type="text" name="firstname" minlength="1" maxlength="20" pattern="^[a-zA-Z]+$" value="<?php echo $fname; ?>" required>
-                </div>
-                <div class="input_blocks">
-                    <label for="lastname">Last Name: </label>
-                    <br>
-                    <input type="text" name="lastname" minlength="1" maxlength="30" pattern="^[a-zA-Z]+$" value="<?php echo $lname; ?>" required>
-                </div>
-                <?php
-                // If they are an admin, allow the following form fields to show
-                if ($user_role == "Admin") {
-                ?>
-                    <div class="input_blocks">
-                        <label for="points">Points: </label>
-                        <br>
-                        <input type="number" name="points" min="1" pattern="^[1-9]+$" value="<?php echo $points; ?>" required>
-                    </div>
-                    <div class="input_blocks">
-                        <label for="points">Activity Status:</label>
-                        <br>
-                        <input type="radio" name="activity" value="1" <?php echo $act; ?> required>
-                        <label for="active">Active</label>
-                        <input type="radio" name="activity" value="0" <?php echo $inact; ?> required>
-                        <label for="Inactive">Inactive</label>
-                    </div>
 
-                    <h3 class="admin_header">Admin Information</h3>
-                    <div class="input_blocks">
-                        <label for="notes">Additional Notes: </label>
-                        <br>
-                        <textarea name="notes" id="notes" cols="20" rows="7" class="note_area" required><?php echo $notes; ?></textarea>
-                    </div>
+                <!-- BASIC -->
+                <section class="basic_container">
+                    <div class="basic_section_one">
+                        <div class="input_blocks">
+                            <label for="firstname">First Name: </label>
+                            <br>
+                            <input type="text" name="firstname" minlength="1" maxlength="20" pattern="^[a-zA-Z]+$" value="<?php echo $fname; ?>" required>
+                        </div>
+                        <div class="input_blocks">
+                            <label for="lastname">Last Name: </label>
+                            <br>
+                            <input type="text" name="lastname" minlength="1" maxlength="30" pattern="^[a-zA-Z]+$" value="<?php echo $lname; ?>" required>
+                        </div>
+                        <?php
+                        // If they are an admin, allow the following form fields to show
+                        if ($user_role == "Admin") {
 
+                        ?>
+                            <div class="input_blocks">
+                                <label for="points">Points: </label>
+                                <br>
+                                <input type="number" name="points" min="1" pattern="^[1-9]+$" value="<?php echo $points; ?>" required>
+                            </div>
+                            <div class="input_blocks">
+                                <label for="points">Activity Status:</label>
+                                <br>
+                                <input type="radio" name="activity" value="1" <?php echo $act; ?> required>
+                                <label for="active">Active</label>
+                                <input type="radio" name="activity" value="0" <?php echo $inact; ?> required>
+                                <label for="Inactive">Inactive</label>
+                            </div>
+                    </div>
+                    <div class="basic_section_two">
+                        <div class="input_blocks">
+                            Test Fill
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ADMIN -->
+                <h3 class="admin_header">Admin Information</h3>
+                <section class="admin_container">
+
+                    <div class="admin_section_one">
+                        <div class="input_blocks">
+                            <label for="notes">Additional Notes: </label>
+                            <br>
+                            <textarea name="notes" id="notes" cols="20" rows="7" class="note_area" required><?php echo $notes; ?></textarea>
+                        </div>
+                        <div class="input_blocks">
+                            <label for="cpr_issue">CPR Cert Issue Date:</label>
+                            <input type="date" name="c_start" id="c_start" value="<?php echo $cp_start; ?>" required>
+                            <?php
+                            // Error message appears
+                            if (isset($cp_error)) {
+                                echo '<span class="error">The issue/renewal date must come before the expiration date!</span>';
+                            }
+                            ?>
+                        </div>
+                        <div class="input_blocks">
+                            <label for="cpr_issue">CPR Cert Expiration Date:</label>
+                            <input type="date" name="c_expire" id="c_expire" value="<?php echo $cp_expire; ?>" required>
+                        </div>
+                    </div>
+                    <div class="admin_section_two">
+                        <div class="input_blocks">
+                            <label for="certs">Certification:</label><br>
+                            <div class="cert_radios">
+                                <input type="radio" name="cert" id="fr" value="100" required checked />
+                                <label for="fres">First Responder</label><br>
+                                <input type="radio" name="cert" id="emtb" value="101" />
+                                <label for="emt-b">EMT-B</label><br>
+                                <input type="radio" name="cert" id="emta" value="102" />
+                                <label for="emt-a">EMT-A</label><br>
+                                <input type="radio" name="cert" id="para" value="103" />
+                                <label for="paramedic">Paramedic</label>
+                            </div>
+                        </div>
+                        <div class="input_blocks">
+                            <label for="issue">Issue Date:</label>
+                            <input type="date" name="r_start" id="r_start" value="<?php echo $run_start; ?>" required>
+                            <?php
+                            // Error message appears
+                            if (isset($run_error)) {
+                                echo '<span class="error">The issue/renewal date must come before the expiration date!</span>';
+                            }
+                            ?>
+                        </div>
+                        <div class="input_blocks">
+                            <label for="issue">Expiration Date:</label>
+                            <input type="date" name="r_expire" id="r_expire" value="<?php echo $run_expire; ?>" required>
+                        </div>
+                    </div>
                 <?php
-                }
+                        }
                 ?>
+                </section>
+
                 <div class="input_blocks radio_block">
                     <label for="agreement">Confirm the edits you have made:</label>
                     <div class="radio_container">
@@ -129,8 +213,6 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                     </div>
                     <button type="submit" name="edit_submit" id="edit_submit" class="edit_button" style="display: none;">Submit Edit</button>
                 </div>
-
-
             </form>
         <?php
             // If the edit submit button has been submitted.
@@ -189,6 +271,47 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                 button.style.display = "none";
             }
         }
+
+        // Data Validation for very important fields below
+        // function validateCerts() {
+        //     if (validateCPR() && validateRun()) {
+        //         document.getElementById('formMain').submit();
+        //     }
+        // }
+
+        // function validateCPR() {
+        //     let startDate = document.getElementById("c_start").value;
+        //     let endDate = document.getElementById("c_expire").value;
+
+        //     if (startDate !== "" && endDate !== "") {
+        //         // If the dates are the same OR start date starts after end date
+        //         if (startDate == endDate || startDate > endDate) {
+        //             document.getElementById("c_error").style.display = "block";
+        //         } else {
+        //             // start/issue date of the certification must be before the expiration date
+        //             document.getElementById("c_error").style.display = "none";
+        //             return true;
+        //         }
+        //     }
+        // }
+
+
+        // function validateRun() {
+        //     let startDate = document.getElementById("r_start").value;
+        //     let endDate = document.getElementById("r_expire").value;
+
+        //     if (startDate !== "" && endDate !== "") {
+        //         // If the dates are the same OR start date starts after end date
+        //         if (startDate == endDate || startDate > endDate) {
+        //             document.getElementById("r_error").style.display = "block";
+        //         } else {
+        //             // start/issue date of the certification must be before the expiration date
+        //             document.getElementById("r_error").style.display = "none";
+        //             return true;
+        //         }
+        //     }
+
+        // }
     </script>
 </body>
 

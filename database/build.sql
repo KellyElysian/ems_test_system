@@ -111,6 +111,7 @@ CREATE TABLE e_Anno_Edit (
 
 
 INSERT INTO e_Cert (name, idenNumber) VALUES
+("CPR", 99)
 ("First Responder", 100),
 ("EMT-B", 101),
 ("EMT-A", 102),

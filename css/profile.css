@@ -102,7 +102,7 @@ h2 {
 
 #edit .note_area {
     font-size: 15px;
-    width: 50%;
+    width: 75%;
     border: 3px solid rgb(117, 117, 117);
 }
 
@@ -135,6 +135,7 @@ h2 {
 
 #edit .radio_block {
     width: fit-content;
+    margin: 0 auto;
 }
 
 #edit .edit_button {
@@ -166,4 +167,26 @@ h2 {
 #edit input[type="text"]:focus,
 #edit input[type="number"]:focus {
     border: 3px dotted rgb(135, 197, 207);
+}
+
+#edit .basic_section_one,
+#edit .basic_section_two {
+    width: 50%;
+}
+
+#edit .admin_section_one,
+#edit .admin_section_two {
+    width: 50%;
+}
+
+#edit .basic_container,
+#edit .admin_container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#edit .error {
+    color: red;
+    display: block;
+    font-size: 12px;
 }
