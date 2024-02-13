@@ -60,7 +60,7 @@ JOIN e_Info AS i ON i.member_id = m.id
 WHERE u.uid = $view_id");
 $p_array = mysqli_fetch_assoc($profile_query);
 
-// Member id
+// Member ID
 $mem_id = $p_array['mid'];
 
 // Assigning all information to appropriate information
@@ -76,8 +76,42 @@ $status = $p_array['status'];
 $radio_select = $status == 1 ? $act = "checked" : $inact = "checked";
 $dateSigned = $p_array['dateSign'];
 $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional notes at the moment.";
+
+// Following section deals purely with certifications and allowing the admin to edit them appropriately
 // If the earlier validation check is passed
-if (!isset($cp_error) and !isset($run_error))
+if (!isset($cp_error) and !isset($run_error)) {
+    /**
+     * Certification ID Number Legend
+     * 99 = CPR
+     * 100 = First Responder (FR)
+     * 101 = EMT-B
+     * 102 = EMT-A
+     * 103 = Paramedic (PM)
+     */
+    // CPR Certification
+    $cpr_query = mysqli_query($db_connection, "SELECT * FROM e_Cert_Assign 
+    WHERE member_id = $mem_id AND cert_id = 99");
+    // If there is already an entry, then none of the relevant fields should be null.
+    /**
+     * Idea being that in order to submit certs on the edit page, they must have both the CPR and Run (aka event or other) certification date
+     * fields be valid inputs, so in the end, checking for the CPR cert is also checking for the other cert.
+     */
+    if (mysqli_num_rows($cpr_query) > 0) {
+        $renewel = 1;
+
+        $cpr_arr = mysqli_fetch_assoc($cpr_query);
+        $cp_start = $cpr_arr['startDate'];
+        $cp_expire = $cpr_arr['expireDate'];
+
+        // Other certification. Only the highest one matters since it's a hierarchal system. Plus they should only have their highest in the system
+        // The editing below will delete their old cert if they get a new one that is higher in the hierarchy.
+        $run_query = mysqli_query($db_connection, "SELECT * FROM e_Cert_Assign 
+        WHERE member_id = $mem_id AND cert_id != 99");
+        $run_arr = mysqli_fetch_assoc($run_query);
+        $run_start = $run_arr['startDate'];
+        $run_expire = $run_arr['expireDate'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -155,7 +189,12 @@ if (!isset($cp_error) and !isset($run_error))
                             <textarea name="notes" id="notes" cols="20" rows="7" class="note_area" required><?php echo $notes; ?></textarea>
                         </div>
                         <div class="input_blocks">
-                            <label for="cpr_issue">CPR Cert Issue Date:</label>
+                            <label for="cpr_issue">
+                                <?php
+                                if (isset($renewel)) echo 'CPR Cert Renewed Date:';
+                                else echo 'CPR Cert Issue Date:';
+                                ?>
+                            </label>
                             <input type="date" name="c_start" id="c_start" value="<?php echo $cp_start; ?>" required>
                             <?php
                             // Error message appears
@@ -171,7 +210,7 @@ if (!isset($cp_error) and !isset($run_error))
                     </div>
                     <div class="admin_section_two">
                         <div class="input_blocks">
-                            <label for="certs">Certification:</label><br>
+                            <label for="certs">Event Certification:</label><br>
                             <div class="cert_radios">
                                 <input type="radio" name="cert" id="fr" value="100" required checked />
                                 <label for="fres">First Responder</label><br>
@@ -184,7 +223,12 @@ if (!isset($cp_error) and !isset($run_error))
                             </div>
                         </div>
                         <div class="input_blocks">
-                            <label for="issue">Issue Date:</label>
+                            <label for="issue">
+                                <?php
+                                if (isset($renewel)) echo 'Renewed Date:';
+                                else echo 'Issue Date:';
+                                ?>
+                            </label>
                             <input type="date" name="r_start" id="r_start" value="<?php echo $run_start; ?>" required>
                             <?php
                             // Error message appears
@@ -242,6 +286,73 @@ if (!isset($cp_error) and !isset($run_error))
             mysqli_query($db_connection, "UPDATE e_Member SET status = $e_status WHERE id = $mem_id");
             mysqli_query($db_connection, "UPDATE e_Info SET notes = '$e_notes' WHERE member_id = $mem_id");
 
+            // Adding first time certificate entries or updating previous ones that were issued.
+            /**
+             * Certification ID Number Legend
+             * 99 = CPR
+             * 100 = First Responder (FR)
+             * 101 = EMT-B
+             * 102 = EMT-A
+             * 103 = Paramedic (PM)
+             */
+
+            // CPR Certification
+            $cpr_query = mysqli_query($db_connection, "SELECT * FROM e_Cert_Assign 
+            WHERE member_id = $mem_id AND cert_id = 99");
+            // Meaning entry is already in, refer to the php code block dealing with this for full details
+            if (mysqli_num_rows($cpr_query) > 0) {
+                // Updating the existing entry
+
+                // Updating the CPR Certificate
+                $cp_start = $_POST['c_start'];
+                $cp_expire = $_POST['c_expire'];
+                mysqli_query($db_connection, "UPDATE e_Cert_Assign SET startDate = '$cp_start', expireDate = '$cp_expire' 
+                WHERE cert_id = 99 AND member_id = $mem_id");
+
+                // Updating the other Certificate
+                /**
+                 * Need to first check which cert is already in the system in case they upgraded or got another cert
+                 * If the certs aren't the same, delete the old one and insert this new one.
+                 */
+                $run_start = $_POST['r_start'];
+                $run_expire = $_POST['r_expire'];
+                $run_cert_id = $_POST['cert'];
+
+                // Finding old cert ID
+                $cert_check = mysqli_query($db_connection, "SELECT cert_id FROM e_Cert_Assign 
+                WHERE member_id = $mem_id AND cert_id != 99");
+                $cert_check_arr = mysqli_fetch_assoc($cert_check);
+                $old_cert_id = $cert_check_arr['cert_id'];
+
+                // Checking the new id compared to the old one
+                if ($old_cert_id == $run_cert_id) {
+                    // If it's still the same, update.
+                    mysqli_query($db_connection, "UPDATE e_Cert_Assign SET startDate = '$run_start', expireDate = '$run_expire'
+                    WHERE cert_id = $run_cert_id AND member_id = $mem_id");
+                } else {
+                    // If it's different, proceed with the process mentioned above
+                    mysqli_query($db_connection, "DELETE FROM e_Cert_Assign WHERE cert_id = $old_cert_id AND member_id = $mem_id");
+
+                    mysqli_query($db_connection, "INSERT INTO e_Cert_Assign (cert_id, member_id, startDate, expireDate) VALUES
+                    ($run_cert_id, $mem_id, '$run_start', '$run_expire')");
+                }
+            } else {
+                // Adding the inputted certificates because no entry for the user currently exists
+
+                // Adding the CPR Certificate
+                $cp_start = $_POST['c_start'];
+                $cp_expire = $_POST['c_expire'];
+                $cc = mysqli_query($db_connection, "INSERT INTO e_Cert_Assign (cert_id, member_id, startDate, expireDate) VALUES
+                (99, $mem_id, '$cp_start', '$cp_expire')");
+
+                // Adding the other Certificate for events
+                $run_start = $_POST['r_start'];
+                $run_expire = $_POST['r_expire'];
+                $run_cert_id = $_POST['cert'];
+                mysqli_query($db_connection, "INSERT INTO e_Cert_Assign (cert_id, member_id, startDate, expireDate) VALUES
+                ($run_cert_id, $mem_id, '$run_start', '$run_expire')");
+            }
+
             // Adding the edit into the edit history
             mysqli_query($db_connection, "INSERT INTO e_Member_Edit (editor_id, member_edited, editTime) VALUES
             ($member_id, $mem_id, NOW())");
@@ -257,7 +368,6 @@ if (!isset($cp_error) and !isset($run_error))
             die();
         }
         ?>
-
     </div>
 
     <script>

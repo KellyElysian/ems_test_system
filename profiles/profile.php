@@ -60,6 +60,30 @@ $points = $p_array['points'];
 $status = $p_array['status'];
 $dateSigned = $p_array['dateSign'];
 $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional notes at the moment.";
+
+// Grabs the CPR certification information if available.
+$cpr_cert_query = mysqli_query($db_connection, "SELECT * FROM e_Cert_Assign WHERE member_id = $mem_id AND cert_id = 99");
+$cpr_cert_arr = mysqli_fetch_assoc($cpr_cert_query);
+// Following deals with setting the expiration date and current date to get days till one's cert expires
+date_default_timezone_set('America/Indiana/Indianapolis');
+$expireDate = new DateTime($cpr_cert_arr['expireDate']);
+$dateNow = date('Y-m-d');
+$dateTimeNow = new DateTime($dateNow);
+$tillExpire = $expireDate->diff($dateTimeNow)->format("%a");
+
+
+// Grabs the other certification needed for runs and stuff
+$other_cert_query = mysqli_query($db_connection, "SELECT * FROM e_Cert_Assign AS ca
+JOIN e_Cert AS c ON c.id = ca.cert_id
+WHERE member_id = $mem_id AND cert_id != 99");
+$other_cert_arr = mysqli_fetch_assoc($other_cert_query);
+$other_cert_name = $other_cert_arr['name'];
+// Following deals with setting the expiration date and current date to get days till one's cert expires
+date_default_timezone_set('America/Indiana/Indianapolis');
+$o_expireDate = new DateTime($other_cert_arr['expireDate']);
+$o_dateNow = date('Y-m-d');
+$o_dateTimeNow = new DateTime($o_dateNow);
+$o_tillExpire = $o_expireDate->diff($o_dateTimeNow)->format("%a");
 ?>
 
 <!DOCTYPE html>
@@ -109,6 +133,7 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                         <p>Date Signed Up: <?php echo $dateSigned; ?></p>
                     <?php
                     } else {
+                        // Atm, being inactive shows nothing since they're inactive.
                     ?>
 
                     <?php
@@ -126,6 +151,51 @@ $notes = strlen($p_array['notes']) != 0 ? $p_array['notes'] : "No additional not
                 <?php
                 }
                 ?>
+            </div>
+            <div class="certs_con">
+                <h3>Certification Information</h3>
+                <div class="inner_cert_con">
+                    <?php
+                    if ($status == 1) {
+                    ?>
+                        <div class="certs cpr-cert">
+                            <h4>CPR Certification</h4>
+                            <p>Issued Date: <?php echo $cpr_cert_arr['startDate'] ?></p>
+                            <p>Expiration Date: <?php echo $cpr_cert_arr['expireDate'] ?></p>
+                            <p>Days till expiration:<span class="<?php
+                                                                    if ($tillExpire > 30) {
+                                                                        echo "safe";
+                                                                    } else if ($tillExpire <= 30 and $tillExpire > 0) {
+                                                                        echo "soon";
+                                                                    } else {
+                                                                        echo "expired";
+                                                                    }
+                                                                    ?>">
+                                    <?php echo $tillExpire; ?>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="certs other-cert">
+                            <h4> <?php echo $other_cert_name; ?> Certification</h4>
+                            <p>Issued Date: <?php echo $other_cert_arr['startDate'] ?></p>
+                            <p>Expiration Date: <?php echo $other_cert_arr['expireDate'] ?></p>
+                            <p>Days till expiration:<span class="<?php
+                                                                    if ($o_tillExpire > 30) {
+                                                                        echo "safe";
+                                                                    } else if ($o_tillExpire <= 30 and $o_tillExpire > 0) {
+                                                                        echo "soon";
+                                                                    } else {
+                                                                        echo "expired";
+                                                                    }
+                                                                    ?>">
+                                    <?php echo $o_tillExpire; ?>
+                                </span>
+                            </p>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
             </div>
 
         </div>
