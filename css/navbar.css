@@ -1,11 +1,20 @@
 nav {
-    padding: 1.0em;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     background-color: lightblue;
     position: sticky;
     width: 100%;
     top: 0;
+}
+
+nav .a_con {
+    padding: 1.0em;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    left: -35px;
 }
 
 .nav_profile_form {
@@ -50,4 +59,9 @@ nav a:link {
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.ems_logo {
+    height: 60px;
+    margin-left: 10px;
 }

@@ -15,33 +15,36 @@ require 'config.php';
 
 <body>
     <nav>
-        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/home.php">Home</a>
-        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php">Events</a>
-        <a href="https://cgi.luddy.indiana.edu/~keldong/ems/annos/annoBoard.php">Announcements</a>
-        <?php
-        // Based on logged in user's role, they may see different navigation bars
-        if ($user_role == "Admin") {
-            echo '
+        <img src="images/star_of_life.png" alt="EMS Logo" class="ems_logo">
+        <div class="a_con">
+            <a href="https://cgi.luddy.indiana.edu/~keldong/ems/home.php">Home</a>
+            <a href="https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php">Events</a>
+            <a href="https://cgi.luddy.indiana.edu/~keldong/ems/annos/annoBoard.php">Announcements</a>
+            <?php
+            // Based on logged in user's role, they may see different navigation bars
+            if ($user_role == "Admin") {
+                echo '
             <a href="https://cgi.luddy.indiana.edu/~keldong/ems/directories/directory.php">Directories</a>
             ';
-        }
+            }
 
-        if (isset($member_id)) {
-            echo '
+            if (isset($member_id)) {
+                echo '
             <form id="profileForm" action="https://cgi.luddy.indiana.edu/~keldong/ems/profiles/profile.php" method="POST" class="nav_profile_form">
                 <input type="hidden" value="' . $user_id . '" name="view_user_id">
                 <a href="#" onclick="submitForm()" class="profile_a">Profile</a>
             </form>';
-        }
+            }
 
-        // Checks if the member_id is set meaning the user is logged in and has a profile
-        // If not, show the login button, if they are logged in, shows the logout button instead
-        if (!isset($member_id)) {
-            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php" class="nav_button">Login</a>';
-        } else {
-            echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login/logout.php" class="nav_button">Logout</a>';
-        }
-        ?>
+            // Checks if the member_id is set meaning the user is logged in and has a profile
+            // If not, show the login button, if they are logged in, shows the logout button instead
+            if (!isset($member_id)) {
+                echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login/login.php" class="nav_button">Login</a>';
+            } else {
+                echo '<a href="https://cgi.luddy.indiana.edu/~keldong/ems/login/logout.php" class="nav_button">Logout</a>';
+            }
+            ?>
+        </div>
     </nav>
 
     <script>

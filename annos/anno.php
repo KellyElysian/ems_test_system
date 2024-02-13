@@ -87,13 +87,19 @@ if ($edit_rows > 0) {
     <?php require $dir . '/includes/navbar.php'; ?>
 
     <div class="container">
-        <div class="header-and-button">
-            <h2><?php echo $title; ?></h2>
-            <form action="editAnno.php" method="POST">
-                <input type="hidden" name="anno_id" value="<?php echo $anno_id; ?>">
-                <button name="edit_anno" value="1" class="edit_button">Edit Announcement</button>
-            </form>
-        </div>
+        <?php
+        if ($user_role == "Admin") {
+        ?>
+            <div class="header-and-button">
+                <h2><?php echo $title; ?></h2>
+                <form action="editAnno.php" method="POST">
+                    <input type="hidden" name="anno_id" value="<?php echo $anno_id; ?>">
+                    <button name="edit_anno" value="1" class="edit_button">Edit Announcement</button>
+                </form>
+            </div>
+        <?php
+        }
+        ?>
         <p class="create_container">Made by <?php echo "<span class='creator'>$creator_name</span>"; ?></p>
         <p class="datetime_container"><?php echo $date . " | " . $time; ?></p>
         <?php
