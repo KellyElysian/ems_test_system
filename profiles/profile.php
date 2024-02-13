@@ -160,8 +160,8 @@ $o_tillExpire = $o_expireDate->diff($o_dateTimeNow)->format("%a");
                     ?>
                         <div class="certs cpr-cert">
                             <h4>CPR Certification</h4>
-                            <p>Issued Date: <?php echo $cpr_cert_arr['startDate'] ?></p>
-                            <p>Expiration Date: <?php echo $cpr_cert_arr['expireDate'] ?></p>
+                            <p>Issued Date: <?php echo $cpr_cert_arr['startDate'] == "" ? "Not Set" : $cpr_cert_arr['startDate']; ?></p>
+                            <p>Expiration Date: <?php echo $cpr_cert_arr['expireDate'] == "" ? "Not Set" : $cpr_cert_arr['expireDate']; ?></p>
                             <p>Days till expiration:<span class="<?php
                                                                     if ($tillExpire > 30) {
                                                                         echo "safe";
@@ -176,9 +176,9 @@ $o_tillExpire = $o_expireDate->diff($o_dateTimeNow)->format("%a");
                             </p>
                         </div>
                         <div class="certs other-cert">
-                            <h4> <?php echo $other_cert_name; ?> Certification</h4>
-                            <p>Issued Date: <?php echo $other_cert_arr['startDate'] ?></p>
-                            <p>Expiration Date: <?php echo $other_cert_arr['expireDate'] ?></p>
+                            <h4> <?php echo $other_cert_name == "" ? "Other " : $other_cert_name; ?> Certification</h4>
+                            <p>Issued Date: <?php echo $other_cert_arr['startDate'] == "" ? "Not Set" : $other_cert_arr['startDate']; ?></p>
+                            <p>Expiration Date: <?php echo $other_cert_arr['expireDate'] == "" ? "Not Set" : $other_cert_arr['expireDate']; ?></p>
                             <p>Days till expiration:<span class="<?php
                                                                     if ($o_tillExpire > 30) {
                                                                         echo "safe";

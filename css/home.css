@@ -1,4 +1,8 @@
 /* Main CSS */
+.main_container {
+    width: 70%;
+    margin: 1.5em auto
+}
 
 .main_container h1 {
     width: fit-content;
@@ -10,7 +14,40 @@
 }
 
 .info_container p {
-    width: 40%;
+    width: 65%;
     margin: 0.5em auto;
     text-align: center;
+}
+
+.warning_alert,
+.expired_alert {
+    width: 45%;
+    margin: 1.0em auto;
+    padding: 1.0em;
+    border-radius: 4px;
+}
+
+.warning_alert {
+    background-color: rgba(255, 255, 188, 0.8);
+    border-left: 4px solid rgb(169, 162, 25);
+    border-right: 4px solid rgb(169, 162, 25);
+    color: rgb(55, 52, 10);
+}
+
+.expired_alert {
+    background-color: rgb(255, 174, 174);
+    border-left: 4px solid rgba(255, 71, 71, 1);
+    border-right: 4px solid rgba(255, 71, 71, 1);
+    color: rgb(95, 27, 27);
+}
+
+.warning_alert h4,
+.expired_alert h4 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.warning_alert p,
+.expired_alert p {
+    margin: 0.5em 0;
 }
