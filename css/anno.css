@@ -69,3 +69,34 @@ Specific announcement
     padding: 0.5em;
     border: 2px solid skyblue;
 }
+
+#spec .edit_container {
+    width: fit-content;
+    padding: 0.5em;
+    border: 2px solid rgb(157, 78, 255);
+    text-align: center;
+}
+
+#spec .header-and-button {
+    display: flex;
+    justify-content: space-between;
+}
+
+#spec .header-and-button h2 {
+    width: fit-content;
+}
+
+#spec .header-and-button form {
+    display: inline;
+    margin: auto 0;
+}
+
+#spec .edit_button {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5em;
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: blanchedalmond;
+    cursor: pointer;
+}

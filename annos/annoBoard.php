@@ -76,7 +76,6 @@ if (isset($_SESSION['user_id'])) {
                 <p> Made by <span class="creator">' . $creator_name . '</span></p>
                 <p class="datetime">' . $date_made . ' | ' . $time_made . '</p>
                 <form method="POST" action="https://cgi.luddy.indiana.edu/~keldong/ems/annos/anno.php">
-                    <input type="hidden" name="anno_creator" value="' . $creator_name . '">
                     <input type="hidden" name="anno_id" value="' . $anno_id . '">
                     <button type="submit" class="sub_button">Click here for announcement details</button>
                 </form>

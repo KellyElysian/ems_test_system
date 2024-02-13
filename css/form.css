@@ -240,3 +240,13 @@ form .submit {
 #anno .inner_container {
     width: 65%;
 }
+
+#anno .e_ano {
+    border: none;
+    background-color: rgb(167, 202, 255);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.6em 0.5em;
+    border-radius: 25px;
+    width: fit-content;
+}
