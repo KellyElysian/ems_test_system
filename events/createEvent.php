@@ -23,6 +23,25 @@ if ($member_status == "Active") {
 }
 
 $event_submit = $_POST['event_submit'];
+
+// Timezone
+date_default_timezone_set('America/Indiana/Indianapolis');
+
+// Date Start and End Validation
+if (isset($event_submit)) {
+    $dt_start = new DateTime($_POST['date_time_start']);
+    $dt_end = new DateTime($_POST['date_time_end']);
+
+    $dt_start = $dt_start->format('Y-m-d H:i:s');
+    $dt_end = $dt_end->format('Y-m-d H:i:s');
+
+    echo $dt_start >= $dt_end;
+
+    if ($dt_start >= $dt_end) {
+        $dt_error = 1;
+        unset($event_submit);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,43 +62,48 @@ $event_submit = $_POST['event_submit'];
         if (!isset($event_submit)) {
         ?>
             <div class="form_container">
-                <div>
+                <div class="inner_container">
                     <h2>Create Event Form</h2>
                     <form method="POST">
                         <p class="headers">Please enter basic event information below:</p>
-                        <div>
+                        <div class="text_box">
                             <label for="title">Event Title:</label>
                             <br>
-                            <textarea name="title" id="title_box" cols="30" rows="5" class="title_box" required></textarea>
+                            <textarea name="title" id="title_box" cols="30" rows="5" class="title_box" required><?php echo $_POST['title']; ?></textarea>
                         </div>
                         <div>
                             <label for="starttime">Start Date & Time:</label>
-                            <input type="datetime-local" name="date_time_start" required>
+                            <input type="datetime-local" name="date_time_start" value="<?php echo $_POST['date_time_start']; ?>" required>
+                            <?php
+                            if (isset($dt_error)) {
+                            ?>
+                                <span class="error">Please ensure the start time is before end time!</span>
+                            <?php } ?>
                         </div>
                         <div>
                             <label for="endtime">End Date & Time:</label>
-                            <input type="datetime-local" name="date_time_end" required>
+                            <input type="datetime-local" name="date_time_end" value="<?php echo $_POST['date_time_end']; ?>" required>
                         </div>
 
                         <p class="headers">Please enter location details below:</p>
                         <div>
                             <label for="street">Street:</label>
-                            <input type="text" name="street" pattern="^[a-zA-Z1-9 ]+$" required>
+                            <input type="text" name="street" pattern="^[a-zA-Z1-9 ]+$" value="<?php echo $_POST['street']; ?>" required>
                         </div>
                         <div>
                             <label for="city">City:</label>
-                            <input type="text" name="city" pattern="^[a-zA-Z ]+$" required>
+                            <input type="text" name="city" pattern="^[a-zA-Z ]+$" value="<?php echo $_POST['city']; ?>" required>
                         </div>
                         <div>
                             <label for="zip">Zip:</label>
-                            <input type="text" name="zip" pattern="^[0-9]*$" required>
+                            <input type="text" name="zip" pattern="^[0-9]*$" value="<?php echo $_POST['zip']; ?>" required>
                         </div>
 
                         <p class="headers">Please enter event details below:</p>
-                        <div>
+                        <div class="text_box">
                             <label for="details">Details & Description of the event:</label>
                             <br>
-                            <textarea name="details" id="details_box" cols="30" rows="10" class="details_box" required></textarea>
+                            <textarea name="details" id="details_box" cols="30" rows="10" class="details_box" required><?php echo $_POST['details']; ?></textarea>
                         </div>
 
                         <div>
@@ -126,11 +150,6 @@ $event_submit = $_POST['event_submit'];
             // Inserting the event into the database
             mysqli_query($db_connection, "INSERT INTO e_Event (title, dateTimeStart, dateTimeEnd, location, details) VALUES
             ('$evt_title', '$evt_start', '$evt_end', '$evt_location', '$evt_details')");
-
-            // Tells the admin that event creation was successful and redirects them back to the eventboard
-            echo '<script>
-            alert("Event creation successful. Redirecting to event page.");
-            </script>';
 
             header('Location: https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php');
             die();

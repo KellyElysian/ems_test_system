@@ -1,7 +1,6 @@
 form {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: flex-end;
+    position: absolute;
+    right: 50px;
     margin: 2.0em 0 1.0em;
 }
 
@@ -18,8 +17,9 @@ form {
 .evt_container {
     width: 30%;
     margin: 1.5em auto;
-    border: 2px dotted lightseagreen;
+    border: 3px solid lightseagreen;
     padding: 0.5em 1.5em;
+    border-radius: 20px;
 }
 
 .header {
@@ -36,4 +36,9 @@ form {
 .detail_link:active {
     text-decoration: none;
     color: rgb(135, 181, 44);
+}
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
 }

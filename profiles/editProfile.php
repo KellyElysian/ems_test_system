@@ -34,6 +34,8 @@ if (isset($edit_submit)) {
     $cp_expire = $_POST['c_expire'];
     $run_start = $_POST['r_start'];
     $run_expire = $_POST['r_expire'];
+
+    $cur_date = date("Y-m-d");
     // If both inputted start dates are after the expiration date
     if (($cp_start >= $cp_expire) and ($run_start >= $run_expire)) {
         $cp_error = 1;

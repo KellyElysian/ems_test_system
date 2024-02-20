@@ -15,7 +15,19 @@ require 'config.php';
 
 <body>
     <nav>
-        <img src="images/star_of_life.png" alt="EMS Logo" class="ems_logo">
+        <?php
+        $currentFile = basename($_SERVER["SCRIPT_FILENAME"], '.php');
+        ?>
+        <img src="
+        <?php
+        // Helps with showing the ems logo based on what file the navbar is being shown in.
+        // This is due to home.php being the only top-level directory file while everything else is in a subdirectory.
+        if ($currentFile == "home") {
+            echo 'images/star_of_life.png';
+        } else {
+            echo '../images/star_of_life.png';
+        }
+        ?>" alt="EMS Logo" class="ems_logo">
         <div class="a_con">
             <a href="https://cgi.luddy.indiana.edu/~keldong/ems/home.php">Home</a>
             <a href="https://cgi.luddy.indiana.edu/~keldong/ems/events/eventsBoard.php">Events</a>

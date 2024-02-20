@@ -18,8 +18,9 @@
 .anno_container {
     width: 75%;
     margin: 1.5em auto;
-    border: 2px dotted lightseagreen;
+    border: 3px solid rgb(16, 139, 63);
     padding: 0.5em 1.5em;
+    border-radius: 15px;
 }
 
 .header {

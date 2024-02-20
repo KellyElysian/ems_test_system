@@ -50,11 +50,43 @@ CREATE TABLE e_Member_Edit (
 
 CREATE TABLE e_Event (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title TEXT,
+    title TEXT, 
+    points INT DEFAULT 100,
     dateTimeStart DATETIME,
     dateTimeEnd DATETIME,
     location VARCHAR(100),
+    closed INT DEFAULT 0,
     details TEXT
+) ENGINE = innodb;
+
+
+CREATE TABLE e_Event_Create (
+    event_id INT,
+    mem_id INT,
+    FOREIGN KEY (mem_id) REFERENCES e_Member(id),
+    FOREIGN KEY (event_id) REFERENCES e_Event(id)
+) ENGINE = innodb;
+
+
+CREATE TABLE e_Signup (
+    mem_id INT NOT NULL,
+    event_id INT NOT NULL,
+    eventRole VARCHAR(20),
+    FOREIGN KEY (mem_id) REFERENCES e_Member(id),
+    FOREIGN KEY (event_id) REFERENCES e_Event(id)
+) ENGINE = innodb;
+
+/*
+1: Worked
+2: Reserved
+3: Dropped
+*/
+CREATE TABLE e_Event_Worked (
+    status INT NOT NULL,
+    event_id INT,
+    mem_id INT,
+    FOREIGN KEY (mem_id) REFERENCES e_Member(id),
+    FOREIGN KEY (event_id) REFERENCES e_Event(id)
 ) ENGINE = innodb;
 
 
@@ -71,15 +103,6 @@ CREATE TABLE e_Cert_Assign (
     expireDate DATE,
     FOREIGN KEY (cert_id) REFERENCES e_Certs(id),
     FOREIGN KEY (member_id) REFERENCES e_Member(id)
-) ENGINE = innodb;
-
-
-CREATE TABLE e_Signup (
-    member_id INT NOT NULL,
-    event_id INT NOT NULL,
-    memberRole VARCHAR(20),
-    FOREIGN KEY (member_id) REFERENCES e_Member(id),
-    FOREIGN KEY (event_id) REFERENCES e_Event(id)
 ) ENGINE = innodb;
 
 
