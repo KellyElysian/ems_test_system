@@ -1,6 +1,10 @@
+.container {
+    width: 85%;
+}
+
 form {
     position: absolute;
-    right: 50px;
+    right: 25px;
     margin: 2.0em 0 1.0em;
 }
 
@@ -15,7 +19,7 @@ form {
 }
 
 .evt_container {
-    width: 30%;
+    width: 40%;
     margin: 1.5em auto;
     border: 3px solid lightseagreen;
     padding: 0.5em 1.5em;
@@ -23,6 +27,10 @@ form {
 }
 
 .header {
+    text-align: center;
+}
+
+.detail_link {
     text-align: center;
 }
 

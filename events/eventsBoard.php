@@ -47,8 +47,8 @@ if (isset($_SESSION['user_id'])) {
         }
 
         // Grabbing all future and current events from the database based on their date start
-        $events = mysqli_query($db_connection, "SELECT title, DATE_FORMAT(dateTimeStart, '%b %e, %y') AS date_start, DATE_FORMAT(dateTimeStart, '%l:%i') AS time_start,
-        DATE_FORMAT(dateTimeEnd, '%b %e, %y') AS date_end, DATE_FORMAT(dateTimeEnd, '%l:%i') AS time_end, location
+        $events = mysqli_query($db_connection, "SELECT id, title, DATE_FORMAT(dateTimeStart, '%b %e, %y') AS date_start, DATE_FORMAT(dateTimeStart, '%k:%i') AS time_start,
+        DATE_FORMAT(dateTimeEnd, '%b %e, %y') AS date_end, DATE_FORMAT(dateTimeEnd, '%k:%i') AS time_end, location
         FROM e_Event WHERE DATE_FORMAT(dateTimeEnd, '%Y-%m-%d') >= CURDATE()
         ORDER BY date_start");
 
@@ -62,22 +62,32 @@ if (isset($_SESSION['user_id'])) {
             $time_end = $event_info['time_end'];
             $location = $event_info['location'];
 
+            // Gathering creator of the event info
+            $id = $event_info['id'];
+            $name_q = mysqli_query($db_connection, "SELECT CONCAT(m.firstName, ' ', m.lastName) AS fullname, DATE_FORMAT(ec.timeMade, '%b %e, %y %k:%i') AS tm FROM e_Event_Create AS ec
+            JOIN e_Member AS m ON m.id = ec.mem_id
+            WHERE ec.event_id = $id");
+            $name_arr = mysqli_fetch_assoc($name_q);
+            $fullname = $name_arr['fullname'];
+            $time = $name_arr['tm'];
+
             // Displaying all the information
             echo "
             <div class='evt_container'>
-                <h4 class='header'>$title</h4>";
+                <h4 class='header'>$title</h4>
+                <p>Created by $fullname at $time</p>";
             if ($date_start == $date_end) {
                 echo "
-                <p class='datetime'>$date_end, $time_start - $time_end</p>
+                <p class='datetime'>$date_end | $time_start - $time_end</p>
                 ";
             } else {
                 echo "
-                <p class='datetime'>$date_end $time_start - $date_end $time_end</p>
+                <p class='datetime'>$date_end | $time_start - $date_end $time_end</p>
                 ";
             }
 
             echo "
-                <p class='location'>$location<p>
+                <p class='location'>$location</p>
                 <a href='event.php' class='detail_link'>Click here for details and sign up</a>
             </div>
             ";

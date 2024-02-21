@@ -23,6 +23,7 @@ form .submit {
     width: 40%;
     margin: 0.25em 0;
     cursor: pointer;
+    height: 40px;
 }
 
 .creation {
@@ -62,6 +63,10 @@ form .submit {
     margin: 1.5em auto;
     font-weight: bold;
     width: fit-content;
+}
+
+input {
+    height: 20px;
 }
 
 /* 
@@ -202,6 +207,24 @@ form .submit {
     display: block;
     font-size: 12px;
     margin: 0.25em;
+}
+
+#event .margin-label {
+    margin-right: 0.75em;
+}
+
+#event .smaller {
+    width: 10%;
+}
+
+#event .margin-shift {
+    margin: 0 0.75em;
+}
+
+#event .slot_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 

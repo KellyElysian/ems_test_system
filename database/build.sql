@@ -60,9 +60,21 @@ CREATE TABLE e_Event (
 ) ENGINE = innodb;
 
 
+CREATE TABLE e_Event_Slots (
+    maxSPR INT,
+    maxEMT INT,
+    maxFR INT,
+    resEMT INT,
+    resFR INT,
+    event_id INT,
+    FOREIGN KEY (event_id) REFERENCES e_Event(id)
+) ENGINE = innodb;
+
+
 CREATE TABLE e_Event_Create (
     event_id INT,
     mem_id INT,
+    timeMade DATETIME,
     FOREIGN KEY (mem_id) REFERENCES e_Member(id),
     FOREIGN KEY (event_id) REFERENCES e_Event(id)
 ) ENGINE = innodb;
@@ -72,6 +84,7 @@ CREATE TABLE e_Signup (
     mem_id INT NOT NULL,
     event_id INT NOT NULL,
     eventRole VARCHAR(20),
+    timeSignedUp DATETIME,
     FOREIGN KEY (mem_id) REFERENCES e_Member(id),
     FOREIGN KEY (event_id) REFERENCES e_Event(id)
 ) ENGINE = innodb;
