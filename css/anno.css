@@ -1,8 +1,7 @@
 .anno_button {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: flex-end;
     margin: 2.0em 0 1.0em;
+    position: absolute;
+    right: 40px;
 }
 
 .create_anno {

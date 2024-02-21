@@ -112,6 +112,25 @@ if (!isset($cp_error) and !isset($run_error)) {
         $run_arr = mysqli_fetch_assoc($run_query);
         $run_start = $run_arr['startDate'];
         $run_expire = $run_arr['expireDate'];
+
+        // Deals with prechecking the correct radio button if their 'other' cert is set
+        $run_cert_id = $run_arr['cert_id'];
+        switch ($run_cert_id) {
+            case 100:
+                $fr_radio = 'checked';
+                break;
+            case 101:
+                $emtb_radio = 'checked';
+                break;
+            case 102:
+                $emta_radio = 'checked';
+                break;
+            case 103:
+                $para_radio = 'checked';
+                break;
+        }
+    } else {
+        $fr_radio = 'checked';
     }
 }
 ?>
@@ -214,13 +233,13 @@ if (!isset($cp_error) and !isset($run_error)) {
                         <div class="input_blocks">
                             <label for="certs">Event Certification:</label><br>
                             <div class="cert_radios">
-                                <input type="radio" name="cert" id="fr" value="100" required checked />
+                                <input type="radio" name="cert" id="cert" value="100" required <?php echo $fr_radio; ?> />
                                 <label for="fres">First Responder</label><br>
-                                <input type="radio" name="cert" id="emtb" value="101" />
+                                <input type="radio" name="cert" id="cert" value="101" <?php echo $emtb_radio; ?> />
                                 <label for="emt-b">EMT-B</label><br>
-                                <input type="radio" name="cert" id="emta" value="102" />
+                                <input type="radio" name="cert" id="cert" value="102" <?php echo $emta_radio; ?> />
                                 <label for="emt-a">EMT-A</label><br>
-                                <input type="radio" name="cert" id="para" value="103" />
+                                <input type="radio" name="cert" id="cert" value="103" <?php echo $para_radio; ?> />
                                 <label for="paramedic">Paramedic</label>
                             </div>
                         </div>
@@ -384,46 +403,24 @@ if (!isset($cp_error) and !isset($run_error)) {
             }
         }
 
-        // Data Validation for very important fields below
-        // function validateCerts() {
-        //     if (validateCPR() && validateRun()) {
-        //         document.getElementById('formMain').submit();
-        //     }
-        // }
+        // Checking for radio button change, shows new blank dates if the cert is not the same
+        let oldCert = document.querySelector('#cert:checked').value;
+        let oldStart = document.querySelector('#r_start').value;
+        let oldExpire = document.querySelector('#r_expire').value;
 
-        // function validateCPR() {
-        //     let startDate = document.getElementById("c_start").value;
-        //     let endDate = document.getElementById("c_expire").value;
-
-        //     if (startDate !== "" && endDate !== "") {
-        //         // If the dates are the same OR start date starts after end date
-        //         if (startDate == endDate || startDate > endDate) {
-        //             document.getElementById("c_error").style.display = "block";
-        //         } else {
-        //             // start/issue date of the certification must be before the expiration date
-        //             document.getElementById("c_error").style.display = "none";
-        //             return true;
-        //         }
-        //     }
-        // }
-
-
-        // function validateRun() {
-        //     let startDate = document.getElementById("r_start").value;
-        //     let endDate = document.getElementById("r_expire").value;
-
-        //     if (startDate !== "" && endDate !== "") {
-        //         // If the dates are the same OR start date starts after end date
-        //         if (startDate == endDate || startDate > endDate) {
-        //             document.getElementById("r_error").style.display = "block";
-        //         } else {
-        //             // start/issue date of the certification must be before the expiration date
-        //             document.getElementById("r_error").style.display = "none";
-        //             return true;
-        //         }
-        //     }
-
-        // }
+        let certRadios = document.querySelectorAll('#cert');
+        for (let i = 0; i < certRadios.length; i++) {
+            certRadios[i].addEventListener('change', () => {
+                let newCert = document.querySelector('#cert:checked').value;
+                if (newCert == oldCert) {
+                    document.querySelector('#r_start').value = oldStart;
+                    document.querySelector('#r_expire').value = oldExpire;
+                } else {
+                    document.querySelector('#r_start').value = "";
+                    document.querySelector('#r_expire').value = "";
+                }
+            })
+        }
     </script>
 </body>
 

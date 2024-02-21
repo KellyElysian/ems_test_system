@@ -103,6 +103,13 @@ CREATE TABLE e_Event_Worked (
 ) ENGINE = innodb;
 
 
+/*
+99: CPR
+100: FR
+101: EMT-B
+102: EMT-A
+103: Paramedic
+*/
 CREATE TABLE e_Cert (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100)
