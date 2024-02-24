@@ -79,6 +79,7 @@ WHERE member_id = $member_id AND cert_id != 99");
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Home main stylesheet -->
     <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/home.css">
 </head>
 

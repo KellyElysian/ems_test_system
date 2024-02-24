@@ -94,7 +94,6 @@ $o_tillExpire = $o_expireDate->diff($o_dateTimeNow)->format("%a");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $name; ?></title>
     <link rel="stylesheet" href="../css/default.css">
-    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/profile.css">
 </head>
 

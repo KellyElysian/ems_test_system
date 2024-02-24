@@ -49,7 +49,6 @@ if (isset($event_submit)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creating an Event</title>
     <link rel="stylesheet" href="../css/default.css">
-    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/form.css">
 </head>
 

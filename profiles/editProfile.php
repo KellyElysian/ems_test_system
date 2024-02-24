@@ -143,7 +143,6 @@ if (!isset($cp_error) and !isset($run_error)) {
     <meta name="viewport" content="width=device-width, initial-scale=100%">
     <title><?php echo $name . "'s Profile"; ?></title>
     <link rel="stylesheet" href="../css/default.css">
-    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/profile.css">
 </head>
 
